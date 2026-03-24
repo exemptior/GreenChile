@@ -808,12 +808,12 @@
 </section>
 
 <!-- DIVIDER -->
-<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.4;"></div>
+<div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
 <!-- MENU -->
 <section id="menu">
   <div class="menu-header">
-    <div class="section-eyebrow">Our Menu</div>
+    <div class="section-eyebrow">Our Menu<img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/zia_icon.png" alt="" style="display:inline-block;width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-left:10px;flex-shrink:0;opacity:1;"></div>
     <h2 class="section-title">Homemade &amp;<br>Made to Order</h2>
     <p class="section-subtitle">Authentic New Mexico cuisine rooted in tradition. Every dish prepared fresh with family recipes passed down through generations.</p>
   </div>
@@ -1361,13 +1361,13 @@
 </section>
 
 <!-- DIVIDER -->
-<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--adobe), var(--chile), var(--gold), var(--adobe));opacity:0.35;"></div>
+<div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="reviews-header">
     <div>
-      <div class="section-eyebrow light">Guest Love</div>
+      <div class="section-eyebrow light">Guest Love<img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/zia_icon.png" alt="" style="display:inline-block;width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-left:10px;flex-shrink:0;opacity:1;"></div>
       <h2 class="section-title light">What La Habra is Saying</h2>
       <p class="section-subtitle light">Real words from real guests — no scripts, no filters.</p>
     </div>
@@ -1393,7 +1393,7 @@
 </section>
 
 <!-- DIVIDER -->
-<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.3;"></div>
+<div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -1411,7 +1411,7 @@
       </div>
     </div>
     <div>
-      <div class="section-eyebrow">Our Story</div>
+      <div class="section-eyebrow">Our Story<img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/zia_icon.png" alt="" style="display:inline-block;width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-left:10px;flex-shrink:0;opacity:1;"></div>
       <h2 class="section-title">More Than a Restaurant &mdash;<br>It's <em style="color:var(--chile);">Family.</em></h2>
       <p class="section-subtitle">Born from New Mexico roots, built in Southern California, and running on love since 2013.</p>
       <p style="font-size:0.92rem;color:#4A5E3A;line-height:1.8;margin-top:1.5rem;">Tony and Lina Esqueda brought the authentic flavors of Tucumcari, New Mexico to La Habra over a decade ago. With more than 30 years of cooking tradition behind them, The Green Chile is a family restaurant in the truest sense &mdash; Tony in the kitchen every day, Lina greeting guests by name, and their children carrying on the tradition. Every dish is made fresh, every day, from recipes that have been in the family for generations.</p>
@@ -1440,14 +1440,14 @@
 </section>
 
 <!-- DIVIDER -->
-<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--gold), var(--chile), var(--adobe), var(--gold));opacity:0.3;"></div>
+<div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
 <!-- CATERING -->
 <section id="catering">
   <div class="catering-morph"></div>
   <div class="catering-grid">
     <div>
-      <div class="section-eyebrow light">Catering</div>
+      <div class="section-eyebrow light">Catering<img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/zia_icon.png" alt="" style="display:inline-block;width:30px;height:30px;object-fit:contain;vertical-align:middle;margin-left:10px;flex-shrink:0;opacity:1;"></div>
       <h2 class="section-title light">Bring New Mexico<br>to Your Event</h2>
       <p class="catering-desc">From family gatherings to corporate luncheons &mdash; the authentic flavors and warmth of The Green Chile come to you.</p>
       <div class="catering-packages">
@@ -1510,7 +1510,7 @@
 </section>
 
 <!-- DIVIDER -->
-<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.35;"></div>
+<div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
 <!-- FOOTER -->
 <footer>
@@ -1654,36 +1654,41 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
-  function handleFormSubmit(btn) {
+  async function handleFormSubmit(btn) {
     const form = btn.closest('.catering-form-wrap');
-    const inputs = form.querySelectorAll('input[type="text"]');
-    const name = (inputs[0] ? inputs[0].value : '') + ' ' + (inputs[1] ? inputs[1].value : '');
-    const email = form.querySelector('input[type="email"]') ? form.querySelector('input[type="email"]').value : '';
-    const phone = form.querySelector('input[type="tel"]') ? form.querySelector('input[type="tel"]').value : '';
-    const date = form.querySelector('input[type="date"]') ? form.querySelector('input[type="date"]').value : '';
-    const selects = form.querySelectorAll('select');
-    const guests = selects[0] ? selects[0].value : '';
-    const eventType = selects[1] ? selects[1].value : '';
-    const notes = form.querySelector('textarea') ? form.querySelector('textarea').value : '';
-
-    const subject = encodeURIComponent('Catering Request from ' + name.trim());
-    const body = encodeURIComponent(
-      'Name: ' + name.trim() + '\n' +
-      'Email: ' + email + '\n' +
-      'Phone: ' + phone + '\n' +
-      'Event Date: ' + date + '\n' +
-      'Guest Count: ' + guests + '\n' +
-      'Event Type: ' + eventType + '\n\n' +
-      'Notes:\n' + notes
-    );
-
-    window.location.href = 'mailto:info@greenchilerestaurant.com?subject=' + subject + '&body=' + body;
-
-    setTimeout(() => {
-      btn.textContent = "Request Sent — We'll be in touch within 24 hours.";
-      btn.style.background = '#4A8B4A';
-      btn.disabled = true;
-    }, 300);
+    const inputs  = form.querySelectorAll('input[type="text"]');
+    const firstName = inputs[0] ? inputs[0].value.trim() : '';
+    const lastName  = inputs[1] ? inputs[1].value.trim() : '';
+    const email     = form.querySelector('input[type="email"]')?.value.trim() || '';
+    const phone     = form.querySelector('input[type="tel"]')?.value.trim()   || '';
+    const date      = form.querySelector('input[type="date"]')?.value         || '';
+    const selects   = form.querySelectorAll('select');
+    const guests    = selects[0]?.value || '';
+    const eventType = selects[1]?.value || '';
+    const notes     = form.querySelector('textarea')?.value.trim()            || '';
+    if (!firstName || !email) { alert('Please fill in your first name and email address.'); return; }
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/xlgpqpqd', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: firstName + ' ' + lastName, email, phone, event_date: date, guests, event_type: eventType, message: notes })
+      });
+      if (res.ok) {
+        btn.textContent = "Request Sent — We'll be in touch within 24 hours!";
+        btn.style.background = '#4A8B4A';
+        form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+      } else {
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.style.background = '#B04A1A';
+        btn.disabled = false;
+      }
+    } catch(e) {
+      btn.textContent = 'Network error — please try again.';
+      btn.style.background = '#B04A1A';
+      btn.disabled = false;
+    }
   }
 
   /* ── HORIZONTAL REVIEW MARQUEE ── */
