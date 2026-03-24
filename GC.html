@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Green Chile Restaurant — Authentic New Mexico Cooking in La Habra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Fraunces:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chile: #2D6E2D; --sage: #4A8B4A; --gold: #D4A843;
+    --cream: #F5F0E8; --warm-white: #F8F4EE; --dark: #0E1A0E;
+    --bark: #1E3A1E; --blush: #DDE8D5; --adobe: #C45A2A;
+    --rust: #B04A1A; --rust-light: #D4693A; --pueblo: #8B3A1A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--dark); overflow-x: hidden; cursor: none; max-width: 100vw; }
+  img, video, svg { max-width: 100%; height: auto; }
+  section, footer, nav, div { max-width: 100%; }
+
+  /* ── CHILE CURSOR ── */
+  #cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    top: 0; left: 0;
+    transform: translate(-2px, -2px);
+    will-change: transform;
+  }
+  #cursor svg {
+    width: 34px; height: 40px;
+    filter: drop-shadow(0 0 6px rgba(45,110,45,0.7)) drop-shadow(0 0 12px rgba(212,168,67,0.35));
+    overflow: visible;
+  }
+
+  /* ── PRESS RIPPLE ── */
+  .press-ripple {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99997;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: radial-gradient(circle, rgba(45,110,45,0.55) 0%, rgba(212,168,67,0.25) 50%, transparent 75%);
+    animation: pressRipple 0.38s ease-out forwards;
+  }
+  @keyframes pressRipple {
+    0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+    60%  { transform: translate(-50%,-50%) scale(1.8); opacity: 0.7; }
+    100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
+  }
+
+  /* ── HOVER LIFT ── */
+  a, button, .menu-card, .pkg-card, .service-item, .stat-card, .menu-item-row, .cal-day {
+    transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s ease, background 0.25s ease, border-color 0.25s ease, color 0.2s ease !important;
+  }
+  a:hover, button:hover { transform: translateY(-3px); }
+  .menu-card:hover { transform: translateY(-6px) !important; box-shadow: 0 24px 60px rgba(45,110,45,0.18) !important; }
+  .pkg-card:hover { transform: translateY(-4px) !important; background: rgba(45,110,45,0.2) !important; border-color: rgba(74,139,74,0.4) !important; }
+  .stat-card:hover { transform: translateY(-4px) !important; }
+  .menu-item-row:hover { transform: translateY(-2px) !important; background: rgba(45,110,45,0.04) !important; }
+  .cal-day:hover { transform: translateY(-3px) !important; box-shadow: 0 8px 24px rgba(45,110,45,0.2) !important; }
+
+  /* ── DECO SYMBOL ── */
+  .deco-symbol {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--chile), var(--gold));
+    border-radius: 50%;
+    font-size: 0.75rem; font-weight: 900; color: white;
+    flex-shrink: 0; letter-spacing: -0.5px;
+  }
+  .deco-symbol.sm { width: 22px; height: 22px; font-size: 0.6rem; }
+  .deco-symbol.rust { background: linear-gradient(135deg, var(--rust), var(--rust-light)); }
+
+  /* ── NAV ── */
+  #gc-nav{
+    position:fixed;
+    top:14px;left:50%;transform:translateX(-50%);
+    z-index:1000;
+    width:calc(100% - 40px);max-width:1300px;
+    background:rgba(10,18,10,0.92);
+    border:1px solid rgba(45,110,45,0.25);
+    border-radius:100px;
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    box-shadow:0 4px 28px rgba(0,0,0,0.35);
+    transition:box-shadow .35s;
+    overflow:visible;
+  }
+  #gc-nav.scrolled{box-shadow:0 8px 44px rgba(0,0,0,0.5),0 0 0 1px rgba(45,110,45,0.3)}
+  .gc-nav-inner{display:flex;align-items:center;justify-content:space-between;padding:9px 14px 9px 18px;gap:0;overflow:visible}
+
+  /* Logo */
+  .gc-nav-logo{
+    display:flex;align-items:center;flex-shrink:0;
+    text-decoration:none;margin-right:20px;
+    transition:opacity .2s;
+  }
+  .gc-nav-logo img{height:48px;width:auto;object-fit:contain;display:block}
+  .gc-nav-logo:hover{opacity:.85}
+
+  /* Links */
+  .gc-nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+  .gc-nav-a{
+    font-size:.72rem;font-weight:500;
+    letter-spacing:.07em;text-transform:uppercase;
+    color:rgba(255,255,255,0.75);
+    padding:9px 18px;border-radius:100px;
+    text-decoration:none;white-space:nowrap;
+    position:relative;
+    transition:background .2s,color .2s;
+  }
+  .gc-nav-a:hover{background:rgba(45,110,45,0.2);color:rgba(255,255,255,1);transform:none !important}
+  .gc-nav-a.active{background:var(--chile);color:#fff;box-shadow:0 2px 10px rgba(45,110,45,0.4)}
+  /* Gold tubelight above active pill */
+  .gc-nav-a.active::before{
+    content:'';
+    position:absolute;
+    top:-16px;
+    left:50%;transform:translateX(-50%);
+    width:26px;height:3px;
+    background:var(--gold);
+    border-radius:0 0 4px 4px;
+    box-shadow:0 0 10px 3px rgba(212,168,67,.75),0 0 20px 6px rgba(212,168,67,.25);
+    animation:gcTubePulse 2.5s ease-in-out infinite;
+    will-change:opacity;
+    display:block;
+  }
+  .gc-nav-a.active::after{display:none}
+  @keyframes gcTubePulse{0%,100%{opacity:.65}50%{opacity:1}}
+
+  /* CTA */
+  .gc-nav-cta{
+    background:var(--chile);color:#fff;
+    font-size:.65rem;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:7px 16px;border-radius:100px;
+    border:none;cursor:pointer;
+    text-decoration:none;white-space:nowrap;
+    position:relative;overflow:hidden;
+    box-shadow:0 2px 10px rgba(45,110,45,.35);
+    transition:transform .2s,box-shadow .25s,background .2s;
+    will-change:transform;
+  }
+  .gc-nav-cta::before{
+    content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;
+    background:linear-gradient(105deg,transparent,rgba(255,255,255,.28),transparent);
+    transition:left .48s;pointer-events:none;
+  }
+  .gc-nav-cta:hover::before{left:160%}
+  .gc-nav-cta:hover{transform:translateY(-1px);box-shadow:0 5px 20px rgba(45,110,45,.55);background:var(--sage)}
+  .gc-nav-cta:active{transform:scale(.97)}
+  .gc-nav-cta::after{display:none !important}
+
+  /* Right group */
+  .gc-nav-right{display:flex;align-items:center;gap:10px;margin-left:20px;flex-shrink:0}
+
+  /* Hamburger */
+  .gc-ham{
+    display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+    width:42px;height:42px;
+    background:rgba(45,110,45,0.2);border:1.5px solid rgba(45,110,45,0.3);
+    border-radius:14px;cursor:pointer;
+    transition:background .25s,box-shadow .25s,transform .2s;
+    position:relative;overflow:hidden;
+  }
+  .gc-ham:hover{background:rgba(45,110,45,0.35);box-shadow:0 0 14px rgba(45,110,45,.25);transform:scale(1.06)}
+  .gc-ham span{width:18px;height:1.8px;background:rgba(255,255,255,0.85);transition:all .35s;display:block;border-radius:2px}
+  .gc-ham.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);background:var(--gold)}
+  .gc-ham.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .gc-ham.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);background:var(--gold)}
+
+  /* Mobile overlay */
+  .gc-mob{
+    display:none;
+    position:fixed;inset:0;z-index:999;
+    flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;overflow:hidden;
+  }
+  .gc-mob.open{display:flex}
+  .gc-mob-bg{
+    position:absolute;inset:0;
+    background:linear-gradient(160deg,#050f05 0%,#0a2a0a 45%,#050f05 100%);
+    z-index:0;
+  }
+  .gc-mob-orb1{
+    position:absolute;width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,110,45,.35),transparent 70%);
+    top:-120px;right:-120px;z-index:0;pointer-events:none;
+    animation:gcOrb1 12s ease-in-out infinite;
+  }
+  .gc-mob-orb2{
+    position:absolute;width:400px;height:400px;border-radius:50%;
+    background:radial-gradient(circle,rgba(212,168,67,.12),transparent 70%);
+    bottom:-80px;left:-80px;z-index:0;pointer-events:none;
+    animation:gcOrb2 9s ease-in-out infinite;
+  }
+  .gc-mob-orb3{
+    position:absolute;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,139,74,.18),transparent 70%);
+    top:40%;left:30%;z-index:0;pointer-events:none;
+    animation:gcOrb3 15s ease-in-out infinite;
+  }
+  @keyframes gcOrb1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,20px) scale(1.08)}}
+  @keyframes gcOrb2{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(20px,-25px) scale(1.1)}}
+  @keyframes gcOrb3{0%,100%{transform:translate(0,0) scale(1)}60%{transform:translate(-15px,15px) scale(.94)}}
+  .gc-mob-close{
+    position:absolute;top:20px;right:20px;z-index:10;
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:rgba(255,255,255,.7);font-size:1.1rem;
+    transition:background .2s,color .2s,transform .2s;
+    opacity:0;
+  }
+  .gc-mob.open .gc-mob-close{animation:gcFadeIn .35s .05s forwards}
+  .gc-mob-close:hover{background:rgba(212,168,67,.25);color:var(--gold);transform:scale(1.1) rotate(90deg)}
+  .gc-mob-links{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;
+    gap:4px;width:100%;padding:0 40px;
+  }
+  .gc-mob-link{
+    font-family:'Playfair Display',serif;
+    font-size:2.8rem;font-weight:300;
+    color:rgba(255,255,255,.85);
+    text-decoration:none;
+    display:flex;align-items:center;gap:14px;
+    padding:10px 28px;border-radius:100px;
+    position:relative;width:fit-content;
+    letter-spacing:-.01em;
+    opacity:0;transform:translateY(22px);
+    transition:color .25s,background .25s,transform .2s,box-shadow .25s;
+    cursor:pointer;
+  }
+  .gc-mob.open .gc-mob-link:nth-child(1){animation:gcLinkIn .5s .06s forwards}
+  .gc-mob.open .gc-mob-link:nth-child(2){animation:gcLinkIn .5s .12s forwards}
+  .gc-mob.open .gc-mob-link:nth-child(3){animation:gcLinkIn .5s .18s forwards}
+  .gc-mob.open .gc-mob-link:nth-child(4){animation:gcLinkIn .5s .24s forwards}
+  .gc-mob.open .gc-mob-link:nth-child(5){animation:gcLinkIn .5s .30s forwards}
+  @keyframes gcLinkIn{to{opacity:1;transform:translateY(0)}}
+  @keyframes gcFadeIn{to{opacity:1}}
+  .gc-mob-num{
+    font-family:'DM Sans',sans-serif;
+    font-size:.58rem;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(212,168,67,.55);
+    min-width:18px;text-align:right;
+    transition:color .25s;
+  }
+  .gc-mob-link:hover{
+    color:#fff;
+    background:rgba(255,255,255,.07);
+    box-shadow:0 0 30px rgba(212,168,67,.12),inset 0 0 0 1px rgba(212,168,67,.2);
+  }
+  .gc-mob-link:hover .gc-mob-num{color:var(--gold)}
+  .gc-mob-link:hover::after{
+    content:'';position:absolute;
+    left:0;top:50%;transform:translateY(-50%);
+    width:3px;height:55%;
+    background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+    border-radius:0 2px 2px 0;
+  }
+  .gc-mob-divider{
+    position:relative;z-index:2;
+    width:120px;height:1px;
+    background:linear-gradient(to right,transparent,rgba(212,168,67,.3),transparent);
+    margin:12px 0;opacity:0;
+  }
+  .gc-mob.open .gc-mob-divider{animation:gcFadeIn .4s .36s forwards}
+  .gc-mob-phone{
+    position:relative;z-index:2;
+    font-family:'DM Sans',sans-serif;
+    font-size:1.1rem;font-weight:300;
+    color:var(--gold);text-decoration:none;
+    letter-spacing:.04em;opacity:0;
+    transition:text-shadow .25s;
+  }
+  .gc-mob.open .gc-mob-phone{animation:gcFadeIn .4s .38s forwards}
+  .gc-mob-phone:hover{text-shadow:0 0 20px rgba(212,168,67,.8)}
+  .gc-mob-cta{
+    position:relative;z-index:2;
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;
+    background:var(--chile);color:#fff;
+    padding:14px 36px;border-radius:100px;
+    text-decoration:none;
+    box-shadow:0 4px 24px rgba(45,110,45,.45);
+    transition:background .22s,box-shadow .25s,transform .2s;
+    opacity:0;margin-top:4px;cursor:pointer;border:none;
+  }
+  .gc-mob.open .gc-mob-cta{animation:gcFadeIn .4s .42s forwards,gcCtaPulse 3s 1s ease-in-out infinite}
+  @keyframes gcCtaPulse{
+    0%,100%{box-shadow:0 4px 24px rgba(45,110,45,.45)}
+    50%{box-shadow:0 4px 32px rgba(45,110,45,.65),0 0 0 8px rgba(45,110,45,.08)}
+  }
+  .gc-mob-cta:hover{background:var(--sage);transform:translateY(-2px);box-shadow:0 8px 32px rgba(45,110,45,.6)}
+
+  /* ── HERO ── */
+  #hero { min-height: 100vh; position: relative; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
+  .hero-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(6px) brightness(0.28) saturate(0.7); transform: scale(1.08); }
+  /* Fallback gradient hero background */
+  .hero-bg-gradient { position: absolute; inset: 0; background: linear-gradient(160deg, #0a1a0a 0%, #1a3a1a 30%, #0f2a0f 60%, #0a1a0a 100%); }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(14,26,14,0.88) 0%, rgba(30,58,30,0.68) 50%, rgba(14,26,14,0.78) 100%), radial-gradient(ellipse 50% 70% at 70% 50%, rgba(45,110,45,0.25) 0%, transparent 65%); }
+  .hero-content { position: relative; z-index: 2; padding: 0 5%; max-width: 700px; animation: fadeUp 0.9s ease both; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(45,110,45,0.22); border: 1px solid rgba(74,139,74,0.55); color: #7EC87E; font-size: 0.72rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 50px; margin-bottom: 1.5rem; animation: fadeUp 0.9s 0.1s ease both; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3rem,7vw,5.5rem); font-weight: 900; color: var(--cream); line-height: 1.05; margin-bottom: 1.5rem; animation: fadeUp 0.9s 0.2s ease both; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 300; color: rgba(245,240,232,0.72); line-height: 1.75; margin-bottom: 2.5rem; max-width: 500px; animation: fadeUp 0.9s 0.3s ease both; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.9s 0.4s ease both; }
+  .btn-primary { background: var(--chile); color: white; padding: 16px 36px; border-radius: 50px; font-size: 1rem; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 30px rgba(45,110,45,0.45); }
+  .btn-primary:hover { background: var(--sage) !important; box-shadow: 0 14px 40px rgba(45,110,45,0.55) !important; }
+  .btn-secondary { background: transparent; color: var(--cream); padding: 16px 32px; border-radius: 50px; font-size: 1rem; text-decoration: none; border: 1.5px solid rgba(245,240,232,0.3); }
+  .btn-secondary:hover { border-color: var(--gold) !important; color: var(--gold) !important; }
+  .hero-stats { position: absolute; right: 5%; top: 0; z-index: 2; display: flex; flex-direction: column; gap: 0.8rem; animation: fadeLeft 0.9s 0.5s ease both; max-width: 160px; }
+  .stat-card { background: rgba(245,240,232,0.07); border: 1px solid rgba(245,240,232,0.13); backdrop-filter: blur(10px); border-radius: 16px; padding: 18px 24px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); display: block; }
+  .stat-label { font-size: 0.72rem; color: rgba(245,240,232,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .hero-scroll { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(245,240,232,0.35); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; animation: fadeUp 1s 1s ease both; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(245,240,232,0.4), transparent); animation: scrollPulse 2s infinite; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 5%; width: 100%; }
+  .section-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--chile); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 10px; }
+  .section-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--chile); display: inline-block; flex-shrink: 0; }
+  .section-eyebrow.light { color: var(--gold); }
+  .section-eyebrow.light::before { background: var(--gold); }
+  .eyebrow-mark { height: 28px; width: auto; object-fit: contain; display: inline-block; vertical-align: middle; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; color: var(--dark); margin-bottom: 0.75rem; }
+  .section-subtitle { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 300; color: #4A5E4A; line-height: 1.7; max-width: 500px; }
+  .section-title.light { color: var(--cream); }
+  .section-subtitle.light { color: rgba(245,240,232,0.55); }
+
+  /* ── SIGNATURE DISHES CALENDAR ── */
+  .specials-calendar { margin-bottom: 3rem; }
+  .specials-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .specials-cal-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--dark); }
+  .specials-cal-sub { font-size: 0.82rem; color: #6A7A5A; font-style: italic; }
+  .specials-morning-badge { background: linear-gradient(135deg, var(--rust), var(--rust-light)); color: white; font-size: 0.75rem; font-weight: 500; padding: 6px 16px; border-radius: 50px; letter-spacing: 0.5px; white-space: nowrap; }
+
+  .cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .cal-day {
+    background: white; border-radius: 16px;
+    border: 1.5px solid rgba(45,110,45,0.12);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .cal-day.weekend { border-color: rgba(196,90,42,0.2); }
+  .cal-day-header {
+    padding: 10px 12px 8px;
+    background: linear-gradient(135deg, rgba(45,110,45,0.08), rgba(212,168,67,0.1));
+    border-bottom: 1px solid rgba(45,110,45,0.1);
+  }
+  .cal-day.weekend .cal-day-header { background: linear-gradient(135deg, rgba(196,90,42,0.08), rgba(208,105,58,0.1)); border-bottom-color: rgba(196,90,42,0.1); }
+  .cal-day-name { font-size: 0.65rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: var(--chile); }
+  .cal-day.weekend .cal-day-name { color: var(--rust-light); }
+  .cal-day-body { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cal-special-name { font-family: 'Playfair Display', serif; font-size: 0.88rem; font-weight: 700; color: var(--dark); line-height: 1.3; margin-bottom: 6px; }
+  .cal-special-detail { font-size: 0.72rem; color: #7A8A6A; line-height: 1.4; }
+  .cal-icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+
+  .breakfast-specials-row {
+    background: linear-gradient(135deg, var(--rust) 0%, var(--rust-light) 60%, var(--gold) 100%);
+    border-radius: 16px; padding: 20px 28px;
+    margin-top: 12px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+    width: 100%; overflow: hidden;
+  }
+  .bsp-label { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: white; white-space: nowrap; }
+  .bsp-items { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .bsp-pill { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 50px; padding: 5px 14px; font-size: 0.78rem; color: rgba(255,255,255,0.9); white-space: nowrap; }
+  .bsp-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: white; white-space: nowrap; }
+
+  /* ── MENU ── */
+  #menu { background: var(--cream); position: relative; overflow: hidden; }
+  .menu-header { max-width: 680px; margin-bottom: 2.5rem; }
+  .menu-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tab-btn { padding: 9px 20px; border-radius: 50px; border: 1.5px solid rgba(45,110,45,0.25); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; color: var(--bark); cursor: none; white-space: nowrap; }
+  .tab-btn.active, .tab-btn:hover { background: var(--chile) !important; border-color: var(--chile) !important; color: white !important; }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  /* ── MENU PHOTO STRIP ── */
+  .menu-photo-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 2.5rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
+  .menu-photo-strip::-webkit-scrollbar { display: none; }
+  .menu-strip-photo { flex: 0 0 220px; height: 150px; border-radius: 14px; scroll-snap-align: start; background-color: var(--blush); background-size: cover; background-position: center; display: block; flex-shrink: 0; }
+
+  /* ── MENU TAB PHOTO BANNER ── */
+  .menu-tab-banner { width: 100%; height: 200px; border-radius: 20px; overflow: hidden; margin-bottom: 2rem; position: relative; }
+  .menu-tab-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .menu-tab-banner-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 20px; background: linear-gradient(to top, rgba(14,26,14,0.75), transparent); color: white; font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+  .menu-tab-banner { background: linear-gradient(135deg, var(--blush) 0%, rgba(45,110,45,0.12) 100%); }
+
+  .menu-feature-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover; background-size: cover; background-position: center; margin-bottom: 1.2rem; }
+
+  .menu-category { margin-bottom: 1.5rem; background: white; border-radius: 16px; padding: 20px 20px 8px; border: 1px solid rgba(45,110,45,0.08); box-shadow: 0 2px 12px rgba(45,110,45,0.05); }
+  .menu-category-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--dark); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid rgba(45,110,45,0.15); }
+  .menu-category-subtitle { font-size: 0.8rem; color: #7A8A6A; font-style: italic; margin-bottom: 1rem; margin-top: 4px; }
+  .menu-items-list { display: flex; flex-direction: column; gap: 0; }
+  .menu-item-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 8px; border-radius: 8px; gap: 1rem; border-bottom: 1px solid rgba(45,110,45,0.06); }
+  .menu-item-row:last-child { border-bottom: none; }
+  .menu-item-row:nth-child(even) { background: rgba(45,110,45,0.025); }
+  .menu-item-info { flex: 1; }
+  .menu-item-name { font-size: 0.92rem; font-weight: 500; color: var(--dark); }
+  .menu-item-desc { font-size: 0.78rem; color: #7A8A6A; margin-top: 2px; line-height: 1.4; }
+  .menu-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--chile); white-space: nowrap; flex-shrink: 0; }
+  .menu-item-badge { font-size: 0.65rem; font-weight: 500; padding: 3px 9px; border-radius: 50px; margin-left: 8px; vertical-align: middle; }
+  .badge-fav { background: rgba(212,168,67,0.2); color: #7A6010; }
+  .menu-items-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+  .menu-cta-wrap { text-align: center; margin-top: 2.5rem; }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--dark); position: relative; overflow: hidden; padding-left: 0; padding-right: 0; padding-bottom: 100px; }
+  #reviews::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 60% at 0% 100%, rgba(45,110,45,0.2) 0%, transparent 60%), radial-gradient(ellipse 40% 50% at 100% 0%, rgba(196,90,42,0.15) 0%, transparent 60%); pointer-events: none; }
+  .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 2rem; position: relative; z-index: 2; padding: 0 5%; }
+  .score-block { text-align: right; }
+  .score-num { font-family: 'Playfair Display', serif; font-size: 4.5rem; font-weight: 900; color: var(--gold); line-height: 1; display: block; }
+  .score-stars-custom { display: flex; gap: 4px; justify-content: flex-end; margin: 6px 0 4px; }
+  .score-stars-custom svg { width: 18px; height: 18px; fill: var(--gold); }
+  .score-label { font-size: 0.78rem; color: rgba(245,240,232,0.4); letter-spacing: 1px; }
+
+  /* ── REVIEW ROWS (horizontal marquee) ── */
+  .rev-rows-wrap { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 16px; overflow: hidden; padding: 8px 0 8px; }
+  /* fade edges */
+  .rev-rows-wrap::before, .rev-rows-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 10; pointer-events: none;
+  }
+  .rev-rows-wrap::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
+  .rev-rows-wrap::after  { right: 0; background: linear-gradient(to left,  var(--dark), transparent); }
+
+  /* Each row is a single flex strip — never wraps, always overflows the viewport */
+  .rev-row { display: flex; gap: 14px; will-change: transform; flex-shrink: 0; flex-wrap: nowrap; min-width: max-content; }
+
+  /* review card */
+  .rev-card {
+    flex: 0 0 320px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    min-height: 180px;
+  }
+  .rev-card-stars { display: flex; gap: 3px; }
+  .rev-card-stars svg { width: 14px; height: 14px; fill: var(--gold); }
+  .rev-card-text { font-family: 'Fraunces', serif; font-size: 0.9rem; font-weight: 300; font-style: italic; color: rgba(245,240,232,0.82); line-height: 1.65; flex: 1; }
+  .rev-card-footer { display: flex; align-items: center; gap: 10px; }
+  .rev-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--chile), var(--gold)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rev-avatar svg { width: 16px; height: 16px; fill: rgba(255,255,255,0.9); }
+  .rev-avatar.rust-av { background: linear-gradient(135deg, var(--rust), var(--rust-light)); }
+  .rev-name { font-size: 0.82rem; font-weight: 500; color: var(--cream); line-height: 1.2; }
+  .rev-meta { font-size: 0.68rem; color: rgba(245,240,232,0.32); margin-top: 1px; }
+
+  /* image placeholder card */
+  .rev-img-card {
+    flex: 0 0 200px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(45,110,45,0.15) 0%, rgba(212,168,67,0.08) 100%);
+    border: 1px solid rgba(45,110,45,0.18);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 180px;
+    position: relative; overflow: hidden;
+    flex-shrink: 0;
+  }
+  .rev-img-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 40%, rgba(212,168,67,0.04) 100%); }
+  .rev-img-card svg { width: 36px; height: 36px; stroke: rgba(212,168,67,0.35); fill: none; stroke-width: 1.2; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--warm-white); position: relative; overflow: hidden; }
+  .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-img-stack { position: relative; height: 500px; }
+  .about-card-big { position: absolute; top: 0; left: 0; width: 78%; height: 360px; border-radius: 24px; background: linear-gradient(135deg, #2D6E2D 0%, #4A8B4A 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(45,110,45,0.35); font-size: 7rem; }
+  .about-card-small { position: absolute; bottom: 0; right: 0; width: 56%; height: 230px; border-radius: 20px; background: linear-gradient(135deg, #8B3A1A 0%, #C45A2A 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 40px rgba(196,90,42,0.35); font-size: 5rem; }
+  .about-quote-card { position: absolute; top: 46%; left: 55%; transform: translateX(-50%); background: white; border-radius: 16px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); width: 200px; z-index: 2; border-top: 3px solid var(--adobe); }
+  .about-quote-text { font-family: 'Fraunces', serif; font-size: 0.82rem; font-style: italic; color: var(--dark); line-height: 1.5; margin-bottom: 8px; }
+  .about-quote-attr { font-size: 0.7rem; color: var(--chile); font-weight: 500; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+  .value-item { display: flex; align-items: flex-start; gap: 12px; }
+  .value-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--chile); margin-top: 6px; flex-shrink: 0; }
+  .value-dot.rust { background: var(--adobe); }
+  .value-text { font-size: 0.875rem; color: #4A5E3A; line-height: 1.5; }
+  .value-text strong { color: var(--dark); font-weight: 600; }
+  .about-info { margin-top: 2rem; padding: 24px; background: var(--cream); border-radius: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border: 1px solid rgba(45,110,45,0.1); }
+  .info-item { display: flex; align-items: center; gap: 10px; }
+  .info-icon-wrap { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, rgba(45,110,45,0.1), rgba(212,168,67,0.15)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .info-icon-wrap svg { width: 15px; height: 15px; fill: var(--chile); }
+  .info-label { font-size: 0.72rem; color: #8A9A7A; text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-val { font-size: 0.875rem; font-weight: 500; color: var(--dark); }
+
+  /* ── CATERING ── */
+  #catering { background: var(--dark); position: relative; overflow: hidden; }
+  .catering-morph {
+    position: absolute; width: 700px; height: 700px;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    background: radial-gradient(ellipse at center, rgba(45,110,45,0.1) 0%, rgba(196,90,42,0.07) 50%, transparent 72%);
+    animation: morphBlob 10s ease-in-out infinite;
+    z-index: 0; pointer-events: none;
+  }
+  .catering-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; position: relative; z-index: 2; }
+  .catering-desc { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 300; color: rgba(245,240,232,0.6); line-height: 1.8; margin-top: 1.5rem; max-width: 440px; }
+  .catering-packages { display: flex; flex-direction: column; gap: 1rem; margin-top: 2.5rem; }
+  .pkg-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 16px; }
+  .pkg-icon-wrap { width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(135deg, var(--chile), var(--sage)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .pkg-icon-wrap.rust { background: linear-gradient(135deg, var(--rust), var(--rust-light)); }
+  .pkg-icon-wrap svg { width: 22px; height: 22px; fill: white; }
+  .pkg-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+  .pkg-desc { font-size: 0.8rem; color: rgba(245,240,232,0.48); line-height: 1.4; }
+  .catering-phone-btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 2rem; background: var(--chile); color: white; padding: 15px 32px; border-radius: 50px; font-size: 1rem; font-weight: 500; text-decoration: none; box-shadow: 0 6px 24px rgba(45,110,45,0.35); }
+  .catering-phone-btn:hover { background: var(--sage) !important; }
+  .phone-circle { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .phone-circle svg { width: 14px; height: 14px; fill: white; }
+  .catering-form-wrap { background: white; border-radius: 28px; padding: 38px; border-top: 4px solid var(--adobe); }
+  .form-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--dark); margin-bottom: 0.3rem; }
+  .form-sub { font-size: 0.875rem; color: #6A7A5A; margin-bottom: 1.8rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--bark); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid rgba(45,110,45,0.2); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--dark); background: var(--warm-white); outline: none; cursor: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--chile); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-submit { width: 100%; padding: 14px; background: var(--chile); color: white; border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: none; margin-top: 0.5rem; box-shadow: 0 6px 20px rgba(45,110,45,0.3); }
+  .form-submit:hover { background: var(--sage) !important; transform: translateY(-3px) !important; }
+
+  /* ── FOOTER ── */
+  footer { background: #050E05; padding: 60px 5% 28px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--sage); margin-bottom: 1rem; display: block; line-height: 1.2; }
+  .footer-logo-text span { color: var(--gold); }
+  .footer-tagline { font-family: 'Fraunces', serif; font-size: 0.92rem; font-style: italic; line-height: 1.6; margin-bottom: 1.2rem; color: rgba(245,240,232,0.5); }
+  .footer-contact-line { font-size: 0.82rem; margin-bottom: 6px; color: rgba(245,240,232,0.4); }
+  .footer-contact-line a { color: rgba(245,240,232,0.55); text-decoration: none; }
+  .footer-contact-line a:hover { color: var(--gold) !important; }
+  .footer-col-title { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; color: rgba(245,240,232,0.28); margin-bottom: 1.1rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a { font-size: 0.875rem; color: rgba(245,240,232,0.45); text-decoration: none; }
+  .footer-links a:hover { color: var(--gold) !important; }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: rgba(245,240,232,0.3); font-size: 0.78rem; }
+  .footer-heart { color: var(--chile); }
+  .hours-grid { display: flex; flex-direction: column; gap: 4px; }
+  .hours-row { font-size: 0.8rem; color: rgba(245,240,232,0.4); display: flex; justify-content: space-between; gap: 1rem; }
+  .hours-row span:last-child { color: rgba(245,240,232,0.6); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeLeft { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+  @keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+  @keyframes morphBlob {
+    0%,100%{border-radius:40% 60% 70% 30%/40% 50% 60% 50%}
+    25%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}
+    50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}
+    75%{border-radius:60% 40% 50% 50%/30% 60% 40% 60%}
+  }
+  @keyframes splitterScroll { from{background-position:0 center} to{background-position:-400px center} }
+  .fade-in-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1100px) { .cal-grid { grid-template-columns: repeat(3,1fr); } }
+
+  /* ── TABLET ── */
+  @media(max-width:900px) {
+    #gc-nav{top:10px;width:calc(100% - 24px)}
+    .gc-nav-links{display:none}
+    .gc-nav-cta{display:none}
+    .gc-ham{display:flex}
+    .gc-nav-logo img{height:38px}
+    #hero { padding-top: 70px; min-height: 100svh; }
+    .hero-content { padding: 0 6%; max-width: 100%; }
+    .hero-title { font-size: clamp(2.4rem, 8vw, 3.8rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-btns { gap: 0.75rem; }
+    .btn-primary, .btn-secondary { padding: 13px 24px; font-size: 0.9rem; }
+    .hero-stats { display: none; }
+    #hoursPill { display: none; }
+    section { padding: 70px 5%; }
+    .section-title { font-size: clamp(2rem, 6vw, 3rem); }
+    .cal-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .breakfast-specials-row { flex-direction: column; gap: 1rem; text-align: center; }
+    .menu-tabs { gap: 0.4rem; }
+    .tab-btn { padding: 8px 14px; font-size: 0.78rem; }
+    .menu-items-2col { grid-template-columns: 1fr; }
+    .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .about-img-stack { height: 300px; }
+    .about-card-big { height: 240px; font-size: 4.5rem; }
+    .about-card-small { height: 160px; font-size: 3rem; }
+    .about-values { grid-template-columns: 1fr; }
+    .about-info { grid-template-columns: 1fr; }
+    .catering-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .catering-form-wrap { padding: 28px 20px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── MOBILE ── */
+  @media(max-width:600px) {
+    #gc-nav{top:8px;width:calc(100% - 16px)}
+    .gc-nav-logo img{height:32px}
+    #hero { padding-top: 70px; min-height: 100svh; padding-bottom: env(safe-area-inset-bottom); overflow: hidden; }
+    .hero-stats { display: none; }
+    #hoursPill { display: none; }
+    .hero-content { padding: 0 5%; padding-left: max(5%, env(safe-area-inset-left)); padding-right: max(5%, env(safe-area-inset-right)); max-width: 100%; }
+    .hero-title { font-size: clamp(2rem, 9vw, 3rem); }
+    .hero-sub { font-size: 0.92rem; max-width: 100%; }
+    .hero-btns { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; justify-content: center; padding: 15px 20px; font-size: 0.95rem; border-radius: 14px; }
+    .hero-badge { font-size: 0.62rem; letter-spacing: 1px; padding: 5px 12px; }
+    .hero-scroll { display: none; }
+    .specials-cal-header { flex-direction: column; align-items: flex-start; }
+    .cal-grid { grid-template-columns: repeat(2,1fr); gap: 8px; }
+    .cal-icon svg { width: 22px; height: 22px; }
+    .cal-special-name { font-size: 0.8rem; }
+    .cal-special-detail { font-size: 0.68rem; }
+    .breakfast-specials-row { padding: 18px 20px; }
+    .bsp-items { flex-direction: column; gap: 0.5rem; }
+    .menu-tabs { gap: 0.35rem; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .menu-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 8px 14px; font-size: 0.74rem; white-space: nowrap; flex-shrink: 0; }
+    .menu-category-title { font-size: 1.25rem; }
+    .menu-item-row { padding: 12px 10px; }
+    .menu-item-name { font-size: 0.85rem; }
+    .menu-item-price { font-size: 0.88rem; }
+    .menu-items-2col { grid-template-columns: 1fr; }
+    .menu-strip-photo { flex: 0 0 160px; height: 115px; }
+    .menu-tab-banner { height: 150px; border-radius: 14px; }
+    .reviews-header { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+    .score-num { font-size: 3rem; }
+    .score-block { text-align: left; }
+    .score-stars-custom { justify-content: flex-start; }
+    .rev-card { flex: 0 0 260px; min-height: 160px; }
+    .rev-img-card { flex: 0 0 160px; min-height: 160px; }
+    .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .about-img-stack { height: 260px; }
+    .about-card-big { width: 72%; height: 200px; font-size: 3.5rem; }
+    .about-card-small { width: 50%; height: 140px; font-size: 2.5rem; }
+    .about-quote-card { width: 170px; padding: 12px 14px; }
+    .about-values { grid-template-columns: 1fr; gap: 0.75rem; }
+    .about-info { grid-template-columns: 1fr; gap: 0.75rem; }
+    .catering-packages { gap: 0.75rem; }
+    .catering-form-wrap { padding: 22px 16px; border-radius: 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .pkg-card { padding: 14px 16px; }
+    .catering-grid { gap: 2rem; }
+    .form-group input, .form-group select, .form-group textarea { font-size: 16px; }
+    .catering-morph { display: none; }
+    section { padding: 70px 5%; width: 100%; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-logo-text { font-size: 1.3rem; }
+    footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
+    body { cursor: auto; }
+    #cursor { display: none; }
+  }
+
+  @media(max-width:380px) {
+    .cal-grid { grid-template-columns: 1fr 1fr; }
+    .hero-title { font-size: 1.9rem; }
+    .section-title { font-size: 1.8rem; }
+    .menu-tabs { gap: 0.25rem; }
+    .tab-btn { padding: 6px 10px; font-size: 0.7rem; }
+    .btn-primary, .btn-secondary { padding: 13px 16px; font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GREEN CHILE PEPPER CURSOR -->
+<div id="cursor">
+  <svg viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Glow blob -->
+    <ellipse cx="15" cy="22" rx="11" ry="14" fill="rgba(45,110,45,0.2)"/>
+    <!-- Arrow body -->
+    <path d="
+      M 4 4
+      L 4 28
+      Q 4 31 7 31
+      L 12 24
+      L 17 34
+      Q 18.5 37 21 35.5
+      Q 23.5 34 22 31
+      L 17 22
+      L 25 22
+      Q 29 22 29 18
+      Q 29 14 25 13
+      L 7 4
+      Q 5.5 3 4 4
+      Z
+    " fill="#2D6E2D" stroke="#D4A843" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- Inner highlight -->
+    <path d="M 8 8 L 8 22 L 13 17 L 23 17 L 8 8 Z" fill="rgba(212,168,67,0.28)"/>
+  </svg>
+</div>
+
+<!-- MOBILE OVERLAY -->
+<div class="gc-mob" id="gcMobMenu">
+  <div class="gc-mob-bg"></div>
+  <div class="gc-mob-orb1"></div>
+  <div class="gc-mob-orb2"></div>
+  <div class="gc-mob-orb3"></div>
+  <button class="gc-mob-close" onclick="gcCloseMob()" aria-label="Close menu">&#10005;</button>
+  <nav class="gc-mob-links">
+    <a href="#menu"      class="gc-mob-link" onclick="gcCloseMob()"><span class="gc-mob-num">01</span>Our Menu</a>
+    <a href="#reviews"   class="gc-mob-link" onclick="gcCloseMob()"><span class="gc-mob-num">02</span>Reviews</a>
+    <a href="#about"     class="gc-mob-link" onclick="gcCloseMob()"><span class="gc-mob-num">03</span>Our Story</a>
+    <a href="#catering"  class="gc-mob-link" onclick="gcCloseMob()"><span class="gc-mob-num">04</span>Catering</a>
+  </nav>
+  <div class="gc-mob-divider"></div>
+  <a href="tel:5624483674" class="gc-mob-phone" onclick="gcCloseMob()">(562) 448-3674</a>
+  <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="gc-mob-cta" onclick="gcCloseMob()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.28-.53a2 2 0 012.11.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Order Online
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="gc-nav">
+  <div class="gc-nav-inner">
+    <a href="#hero" class="gc-nav-logo" aria-label="The Green Chile Restaurant home">
+      <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/logo_combined.png" alt="The Green Chile Restaurant">
+    </a>
+    <div class="gc-nav-links">
+      <a href="#menu"     class="gc-nav-a" data-s="menu">Our Menu</a>
+      <a href="#reviews"  class="gc-nav-a" data-s="reviews">Reviews</a>
+      <a href="#about"    class="gc-nav-a" data-s="about">Our Story</a>
+      <a href="#catering" class="gc-nav-a" data-s="catering">Catering</a>
+    </div>
+    <div class="gc-nav-right">
+      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="gc-nav-cta">Order Online</a>
+      <button class="gc-ham" id="gcHamBtn" onclick="gcToggleMob()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-bg-img" id="heroBg" style="background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/gc_burger_close.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">&#10022; Authentic New Mexico Cooking &nbsp;&middot;&nbsp; La Habra, CA</div>
+    <h1 class="hero-title">Taste of<br><em>New Mexico.</em></h1>
+    <!-- NAP Pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.4rem;align-items:center;">
+      <!-- Address -->
+      <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:rgba(45,110,45,0.22);border:1px solid rgba(74,139,74,0.5);color:#8ED88E;font-size:0.72rem;font-weight:600;letter-spacing:0.8px;padding:6px 14px;border-radius:50px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(45,110,45,0.4)'" onmouseout="this.style.background='rgba(45,110,45,0.22)'">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="#8ED88E"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        2050 W Whittier Blvd, La Habra, CA
+      </a>
+      <!-- Phone -->
+      <a href="tel:5624483674" style="display:inline-flex;align-items:center;gap:7px;background:rgba(45,110,45,0.22);border:1px solid rgba(74,139,74,0.5);color:#8ED88E;font-size:0.72rem;font-weight:600;letter-spacing:0.8px;padding:6px 14px;border-radius:50px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(45,110,45,0.4)'" onmouseout="this.style.background='rgba(45,110,45,0.22)'">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="#8ED88E"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        (562) 448-3674
+      </a>
+      <!-- Hours -->
+      <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(45,110,45,0.22);border:1px solid rgba(74,139,74,0.5);color:#8ED88E;font-size:0.72rem;font-weight:600;letter-spacing:0.8px;padding:6px 14px;border-radius:50px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="#8ED88E"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+        Mon–Thu 11–7 &nbsp;·&nbsp; Fri 11–8 &nbsp;·&nbsp; Sat–Sun 10–8/7
+      </span>
+    </div>
+    <!-- Service pills -->
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap;">
+      <span style="background:rgba(45,110,45,0.28);border:1px solid rgba(74,139,74,0.55);color:#8ED88E;font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:50px;">Dine In</span>
+      <span style="color:rgba(245,240,232,0.3);font-size:0.7rem;">&#10022;</span>
+      <span style="background:rgba(45,110,45,0.28);border:1px solid rgba(74,139,74,0.55);color:#8ED88E;font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:50px;">Takeout</span>
+      <span style="color:rgba(245,240,232,0.3);font-size:0.7rem;">&#10022;</span>
+      <span style="background:rgba(45,110,45,0.28);border:1px solid rgba(74,139,74,0.55);color:#8ED88E;font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:50px;">Catering</span>
+    </div>
+    <p class="hero-sub">Family recipes rooted in New Mexico tradition. Stuffed sopapillas, Navajo tacos &amp; homemade green chile &mdash; made fresh to order in La Habra.</p>
+    <div class="hero-btns">
+      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="btn-primary">Order Online</a>
+      <a href="#menu" class="btn-secondary">View Menu</a>
+    </div>
+  </div>
+  <div id="hoursPill" style="position:absolute;top:0;right:5%;z-index:2;animation:fadeLeft 0.9s 0.1s ease both;">
+    <div style="background:rgba(245,240,232,0.07);border:1px solid rgba(245,240,232,0.18);backdrop-filter:blur(10px);border-radius:50px;padding:8px 22px;display:flex;align-items:center;gap:14px;white-space:nowrap;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="rgba(212,168,67,0.9)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+      <span style="font-size:0.78rem;color:rgba(245,240,232,0.6);letter-spacing:0.5px;">Mon–Thu 11–7 &nbsp;·&nbsp; Fri–Sat 11–8 &nbsp;·&nbsp; Sun 10–7</span>
+      <span style="width:1px;height:16px;background:rgba(245,240,232,0.2);display:inline-block;"></span>
+      <span style="font-size:0.78rem;color:rgba(245,240,232,0.6);letter-spacing:0.5px;">Call (562) 448-3674</span>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><span class="stat-num">4.5&#9733;</span><span class="stat-label">Google Rating</span></div>
+    <div class="stat-card" style="text-align:center;">
+      <span class="stat-num" style="display:flex;justify-content:center;align-items:center;padding:4px 0;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <rect x="5" y="5" width="36" height="27" rx="8" fill="rgba(212,168,67,0.12)" stroke="#D4A843" stroke-width="2"/>
+          <path d="M13 32 L9 43 L21 35" fill="rgba(212,168,67,0.12)" stroke="#D4A843" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="15" cy="18.5" r="3" fill="#D4A843" opacity="0.9"/>
+          <circle cx="23" cy="18.5" r="3" fill="#D4A843" opacity="0.9"/>
+          <circle cx="31" cy="18.5" r="3" fill="#D4A843" opacity="0.9"/>
+          <text x="33" y="48" font-size="9" fill="rgba(212,168,67,0.65)" font-family="sans-serif" font-weight="700">100+</text>
+        </svg>
+      </span>
+      <span class="stat-label">Reviews</span>
+    </div>
+    <div class="stat-card" style="text-align:center;">
+      <span class="stat-num" style="display:flex;justify-content:center;align-items:center;padding:4px 0;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <!-- Steam -->
+          <path d="M19 17 Q17 13 19 9 Q21 5 19 2" stroke="#D4A843" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.65"/>
+          <path d="M26 16 Q24 12 26 8 Q28 4 26 2" stroke="#D4A843" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.5"/>
+          <path d="M33 17 Q31 13 33 9 Q35 5 33 2" stroke="#D4A843" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.65"/>
+          <!-- Bowl -->
+          <ellipse cx="26" cy="36" rx="17" ry="10" fill="rgba(212,168,67,0.12)" stroke="#D4A843" stroke-width="2"/>
+          <ellipse cx="26" cy="35" rx="13" ry="7.5" fill="rgba(45,110,45,0.15)" stroke="#4A8B4A" stroke-width="1" opacity="0.55"/>
+          <rect x="42" y="33.8" width="8" height="4" rx="2" fill="#D4A843" opacity="0.8"/>
+        </svg>
+      </span>
+      <span class="stat-label">Made Fresh</span>
+    </div>
+    <div class="stat-card"><span class="stat-num">30+</span><span class="stat-label">Yrs of Tradition</span></div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- DIVIDER -->
+<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.4;"></div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header">
+    <div class="section-eyebrow">Our Menu</div>
+    <h2 class="section-title">Homemade &amp;<br>Made to Order</h2>
+    <p class="section-subtitle">Authentic New Mexico cuisine rooted in tradition. Every dish prepared fresh with family recipes passed down through generations.</p>
+  </div>
+
+  <!-- SIGNATURE DISHES GRID -->
+  <div class="specials-calendar fade-in-up">
+    <div class="specials-cal-header">
+      <div>
+        <div class="specials-cal-title">Signature Dishes</div>
+        <div class="specials-cal-sub">The dishes that keep guests coming back</div>
+      </div>
+    </div>
+    <!-- Color strip accent -->
+    <div style="display:flex;gap:6px;margin-bottom:1rem;opacity:0.18;">
+      <div style="height:6px;flex:1;border-radius:3px;background:#2D6E2D;"></div>
+      <div style="height:6px;flex:1;border-radius:3px;background:#D4A843;"></div>
+      <div style="height:6px;flex:1;border-radius:3px;background:#C45A2A;"></div>
+      <div style="height:6px;flex:1;border-radius:3px;background:#2D6E2D;"></div>
+      <div style="height:6px;flex:1;border-radius:3px;background:#D4A843;"></div>
+    </div>
+    <div class="cal-grid">
+      <!-- Stuffed Sopapilla -->
+      <div class="cal-day fade-in-up" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/sopapilla_plate.jpg');background-size:cover;background-position:center;opacity:0.2;border-radius:inherit;"></div>
+        <div class="cal-day-header"><div class="cal-day-name">House Favorite</div></div>
+        <div class="cal-day-body">
+          <span class="cal-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="10" width="20" height="12" rx="5" fill="rgba(45,110,45,0.12)" stroke="#2D6E2D" stroke-width="1.5"/><path d="M7 10 Q14 4 21 10" stroke="#2D6E2D" stroke-width="1.5" fill="none"/><line x1="8" y1="15" x2="20" y2="15" stroke="#D4A843" stroke-width="1" opacity="0.6"/><circle cx="12" cy="18" r="1.5" fill="#C45A2A"/><circle cx="16" cy="18" r="1.5" fill="#C45A2A"/></svg>
+          </span>
+          <div class="cal-special-name">Stuffed Sopapilla</div>
+          <div class="cal-special-detail">Pillowy dough filled with seasoned beef &amp; smothered in green chile</div>
+        </div>
+      </div>
+      <!-- Navajo Taco -->
+      <div class="cal-day fade-in-up" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/navajo_taco_studio.jpg');background-size:cover;background-position:center;opacity:0.2;border-radius:inherit;"></div>
+        <div class="cal-day-header"><div class="cal-day-name">Must Try</div></div>
+        <div class="cal-day-body">
+          <span class="cal-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="18" rx="10" ry="5" fill="rgba(212,168,67,0.15)" stroke="#D4A843" stroke-width="1.5"/><path d="M7 16 Q9 8 14 10 Q19 12 21 8" stroke="#2D6E2D" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="12" cy="13" r="1.5" fill="#D4A843"/><circle cx="16" cy="12" r="1.2" fill="#C45A2A"/></svg>
+          </span>
+          <div class="cal-special-name">Navajo Taco</div>
+          <div class="cal-special-detail">Fry bread topped with beans, beef, green chile, lettuce &amp; cheese</div>
+        </div>
+      </div>
+      <!-- Green Chile Plate -->
+      <div class="cal-day fade-in-up" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/red_chile_plate.jpg');background-size:cover;background-position:center;opacity:0.2;border-radius:inherit;"></div>
+        <div class="cal-day-header"><div class="cal-day-name">NM Classic</div></div>
+        <div class="cal-day-body">
+          <span class="cal-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="18" rx="10" ry="5" fill="rgba(45,110,45,0.12)" stroke="#2D6E2D" stroke-width="1.5"/><path d="M14 13 Q12 6 14 3" stroke="#2D6E2D" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M10 9 Q8 6 10 4" stroke="#4A8B4A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7"/><path d="M18 9 Q20 6 18 4" stroke="#4A8B4A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7"/></svg>
+          </span>
+          <div class="cal-special-name">Green Chile Plate</div>
+          <div class="cal-special-detail">Slow-cooked green chile over rice &amp; beans with warm tortillas</div>
+        </div>
+      </div>
+      <!-- Chile Relleno -->
+      <div class="cal-day fade-in-up" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/chile_relleno_mural.jpg');background-size:cover;background-position:center;opacity:0.2;border-radius:inherit;"></div>
+        <div class="cal-day-header"><div class="cal-day-name">Traditional</div></div>
+        <div class="cal-day-body">
+          <span class="cal-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 20 Q6 10 14 8 Q22 10 21 20 Q16 24 14 24 Q12 24 7 20Z" fill="rgba(45,110,45,0.12)" stroke="#2D6E2D" stroke-width="1.5"/><line x1="14" y1="8" x2="14" y2="4" stroke="#2D6E2D" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="14" cy="16" rx="4" ry="3" fill="rgba(212,168,67,0.2)" stroke="#D4A843" stroke-width="1"/></svg>
+          </span>
+          <div class="cal-special-name">Chile Relleno</div>
+          <div class="cal-special-detail">Roasted pepper stuffed with cheese, egg-battered &amp; topped with sauce</div>
+        </div>
+      </div>
+      <!-- Red Chile Enchiladas -->
+      <div class="cal-day fade-in-up" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/green_chile_enchiladas.jpg');background-size:cover;background-position:center;opacity:0.2;border-radius:inherit;"></div>
+        <div class="cal-day-header"><div class="cal-day-name">Comfort Food</div></div>
+        <div class="cal-day-body">
+          <span class="cal-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="12" width="20" height="6" rx="3" fill="rgba(196,90,42,0.15)" stroke="#C45A2A" stroke-width="1.5"/><rect x="5" y="17" width="18" height="5" rx="2" fill="rgba(196,90,42,0.1)" stroke="#C45A2A" stroke-width="1.2" opacity="0.7"/><line x1="7" y1="15" x2="21" y2="15" stroke="#D4A843" stroke-width="1" opacity="0.5"/></svg>
+          </span>
+          <div class="cal-special-name">Red Chile Enchiladas</div>
+          <div class="cal-special-detail">Rolled in housemade red chile sauce with beef or chicken &amp; melted cheese</div>
+        </div>
+      </div>
+    </div>
+    <!-- Family Recipe Banner -->
+    <div class="breakfast-specials-row" style="position:relative;overflow:hidden;">
+      <div style="position:relative;z-index:1;">
+        <div style="font-size:0.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:4px;">Since 2013 &nbsp;&middot;&nbsp; La Habra, CA</div>
+        <div class="bsp-label">The Esqueda Family Recipe</div>
+      </div>
+      <div class="bsp-items" style="position:relative;z-index:1;">
+        <span class="bsp-pill">Inspired by Tucumcari, New Mexico</span>
+        <span class="bsp-pill">30+ Years of Tradition</span>
+        <span class="bsp-pill">Made Fresh Daily</span>
+      </div>
+      <div style="position:relative;z-index:1;text-align:center;">
+        <div style="font-size:1.1rem;font-family:'Playfair Display',serif;font-weight:900;color:white;line-height:1;">Home-Cooked</div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.75);letter-spacing:1px;margin-top:2px;">every single day</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOD PHOTO STRIP -->
+  <div class="menu-photo-strip" role="list" aria-label="Food photos">
+    <div class="menu-strip-photo" role="img" aria-label="Navajo Taco" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/navajo_taco_studio.jpg" alt="Navajo Taco" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="menu-strip-photo" role="img" aria-label="Stuffed Sopapilla" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/sopapilla_plate.jpg" alt="Stuffed Sopapilla" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="menu-strip-photo" role="img" aria-label="Green Chile Enchiladas" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/green_chile_enchiladas.jpg" alt="Green Chile Enchiladas" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="menu-strip-photo" role="img" aria-label="Green Chile Burger" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/gc_burger_mural.jpg" alt="Green Chile Burger" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="menu-strip-photo" role="img" aria-label="Crazy Fries" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/green_chile_fries.jpg" alt="Crazy Fries" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="menu-strip-photo" role="img" aria-label="Red Chile Plate" style="overflow:hidden;padding:0;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/red_chile_plate.jpg" alt="Red Chile Plate" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+  </div>
+
+  <!-- MENU TABS -->
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('appetizers',this)">Appetizers</button>
+    <button class="tab-btn" onclick="showTab('salads',this)">Salads &amp; Soups</button>
+    <button class="tab-btn" onclick="showTab('nmspecialties',this)">NM Specialties</button>
+    <button class="tab-btn" onclick="showTab('nmfavorites',this)">NM Favorites</button>
+    <button class="tab-btn" onclick="showTab('enchiladas',this)">Enchiladas</button>
+    <button class="tab-btn" onclick="showTab('fajitas',this)">Fajitas &amp; Burritos</button>
+    <button class="tab-btn" onclick="showTab('burgers',this)">Burgers &amp; Sandwiches</button>
+    <button class="tab-btn" onclick="showTab('crazyfries',this)">Crazy Fries</button>
+    <button class="tab-btn" onclick="showTab('tacos',this)">Tacos, Tostadas &amp; Sopes</button>
+    <button class="tab-btn" onclick="showTab('bowls',this)">Bowls</button>
+    <button class="tab-btn" onclick="showTab('breakfast',this)">Breakfast</button>
+    <button class="tab-btn" onclick="showTab('desserts',this)">Desserts</button>
+    <button class="tab-btn" onclick="showTab('drinks',this)">Drinks</button>
+  </div>
+
+  <!-- ── APPETIZERS ── -->
+  <div id="tab-appetizers" class="menu-panel active">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/nachos.jpg" alt="Appetizers" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Appetizers</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Starters</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Bean Dip <span class="menu-item-badge badge-fav">Fan Fave</span></div><div class="menu-item-desc">Beans, cheese &amp; Hatch GC</div></div><div class="menu-item-price">$6.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Guacamole</div><div class="menu-item-desc">Made fresh with a squeeze of lime</div></div><div class="menu-item-price">$10.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chorizo Cheese Dip</div><div class="menu-item-desc">Our famous green chile dip topped with delicious chorizo</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Strips</div><div class="menu-item-desc">Strips &amp; Fries</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Crispy Beef Taquitos</div><div class="menu-item-desc">2 Taquitos w/guacamole</div></div><div class="menu-item-price">$6.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Crispy Chicken Taquitos</div><div class="menu-item-desc">2 Taquitos w/guacamole</div></div><div class="menu-item-price">$6.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Green Chile Potato Taquitos</div><div class="menu-item-desc">2 taquitos stuffed with mashed potatoes, green chile &amp; cheese topped with cabbage and avocado aioli</div></div><div class="menu-item-price">$5.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Smother Tamale</div><div class="menu-item-desc">Hatch GC &amp; Cheese tamale smothered Christmas</div></div><div class="menu-item-price">$8.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Green Chile Dip</div><div class="menu-item-desc">Hatch GC, cream cheese &amp; cheese</div></div><div class="menu-item-price">$10.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Jalapeño Poppers</div><div class="menu-item-desc">Filled with Green Chile Dip &amp; topped with bacon</div></div><div class="menu-item-price">$10.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Onion Rings</div><div class="menu-item-desc">Golden crispy onion rings</div></div><div class="menu-item-price">$9.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Nachos</div><div class="menu-item-desc">Beans, meat, cheese, guac &amp; sour cream. w/Chicken or Pork GC $15.99 &middot; w/Beef RC, Steak or Shredded beef $16.99</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Quesadilla</div><div class="menu-item-desc">Hatch GC &amp; cheese served with guacamole &amp; sour cream. w/Chicken $14.99 &middot; w/Steak or Shredded beef $16.99</div></div><div class="menu-item-price">$11.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Black Bean Quesadillas</div><div class="menu-item-desc">3 Corn tortillas with cheese &amp; black bean mix topped with avocado aioli. w/Chicken $12.99 &middot; w/Steak $13.99</div></div><div class="menu-item-price">$10.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SALADS & SOUPS ── -->
+  <div id="tab-salads" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/shrimp_salad.jpg" alt="Salads &amp; Soups" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Salads &amp; Soups</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Salads</div>
+      <div class="menu-category-subtitle">Salad mix — romaine &amp; iceberg &middot; Black Bean mix — black beans, corn &amp; Hatch green chile &middot; Dressings: GC Ranch, Chipotle Ranch, 1000 Island, Balsamic, Avocado Ranch &amp; Cilantro Pepita</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Taco Salad</div><div class="menu-item-desc">Tortilla shell filled with Ground Beef GC, beans, cheese, lettuce mix, tomato, guacamole &amp; sour cream. Served with salsa</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chopped Chicken Salad</div><div class="menu-item-desc">Grilled chicken or fried Chicken tenders on top of our salad mix, topped with bacon, tomatoes, diced avocado &amp; cheese. Your choice of dressing</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Cajun Shrimp Salad</div><div class="menu-item-desc">Cajun Shrimp, salad mix, cabbage, black beans mix. Served with chipotle ranch</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest Salad</div><div class="menu-item-desc">Grilled Chicken, salad mix, cheese &amp; black bean mix. Served with avocado ranch</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Buffalo Chicken Salad</div><div class="menu-item-desc">Diced buffalo strips, salad mix, tomato, diced avocado &amp; cheese. Served with GC Ranch</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Caesar <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Grilled Chicken, romaine lettuce, cotija cheese &amp; tortilla strips. Served with cilantro pepita dressing. Sub Shrimp +$3</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">GC Ranch Salad</div><div class="menu-item-desc">Grilled chicken, salad mix, Hatch GC, corn, cheese, tomatoes &amp; guacamole. Served with GC Ranch</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak Fajita Salad</div><div class="menu-item-desc">Grilled steak, sautéed bell peppers &amp; onions, tomato, cucumber, corn &amp; guacamole. Served with chipotle ranch</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Petite Caesar</div><div class="menu-item-desc">Romaine, cotija cheese &amp; tortilla strips. Served with cilantro pepita dressing</div></div><div class="menu-item-price">$6.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Petite Salad</div><div class="menu-item-desc">Salad mix, cucumber &amp; tomato. Your choice of dressing</div></div><div class="menu-item-price">$6.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Soups</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Tortilla Soup</div><div class="menu-item-desc">Cup $5.99 &middot; Bowl $10.99 &middot; Large $15.99. *Tortillas or sopapillas not served with cups of soup</div></div><div class="menu-item-price">from $5.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Posole or Menudo <span class="menu-item-badge badge-fav">NM Classic</span></div><div class="menu-item-desc">Served with corn tortillas, flour tortillas or sopapillas. Cup $6.99 &middot; Bowl $12.99 &middot; Large $16.99</div></div><div class="menu-item-price">from $6.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NM SPECIALTIES (Navajo Taco / Sopapilla / Burrito choose-your-meat) ── -->
+  <div id="tab-nmspecialties" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/navajo_taco_studio.jpg" alt="New Mexico Specialties — Choose Your Item, Then Choose Your Meat" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">New Mexico Specialties — Choose Your Item, Then Choose Your Meat</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Navajo Taco, Sopapilla &amp; Burrito</div>
+      <div class="menu-category-subtitle">Fry bread with beans, meat, cheese, lettuce, tomato &amp; chipotle aioli &middot; Get it Smothered +$2 &middot; Plates served with rice &amp; beans</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC &amp; Potato</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shredded Beef</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie &amp; Hatch GC</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bean Cheese &amp; Hatch GC</div></div><div class="menu-item-price">$10.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Big Burritos</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shrimp Burrito <span class="menu-item-badge badge-fav">Fan Fave</span></div><div class="menu-item-desc">Beans, rice, guacamole, cheese, pico de gallo &amp; chipotle aioli</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Grande Burrito <span class="menu-item-badge badge-fav">Fan Fave</span></div><div class="menu-item-desc">Shredded Beef, beans, rice, cheese, guacamole &amp; pico de gallo</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Surf &amp; Turf Burrito <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Beans, rice, steak &amp; shrimp with chipotle aioli</div></div><div class="menu-item-price">$19.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest Enchiladas</div><div class="menu-item-desc">Flour tortillas stuffed with cheese smothered in a spicy crema topped with black bean mix, served w/rice. w/Meat $17.99 &middot; w/Shrimp $18.99</div></div><div class="menu-item-price">$15.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NM FAVORITES (Plates) ── -->
+  <div id="tab-nmfavorites" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/red_chile_plate.jpg" alt="New Mexico Favorites — Plates served with rice &amp; beans" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">New Mexico Favorites — Plates served with rice &amp; beans</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Plates</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Picadillo Plate</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork Green Chile Plate</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef &amp; Potato GC Plate</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile Plate</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Taquito Plate</div><div class="menu-item-desc">3 Taquitos w/guacamole</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Taquito Plate</div><div class="menu-item-desc">3 Taquitos w/guacamole</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef &amp; Bean Flauta Plate <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Ground beef, beans &amp; cheese</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest Flauta Plate</div><div class="menu-item-desc">Flour tortilla stuffed with chicken, cheese, black bean mix &amp; chipotle aioli</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Flauta Plate</div><div class="menu-item-desc">Chicken, cheese &amp; green chile wrapped in a flour tortilla with guacamole &amp; sour cream</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Smothered Tamale Plate</div><div class="menu-item-desc">Tamale smothered green, red or Christmas</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Taco &amp; Cheese Enchilada <span class="menu-item-badge badge-fav">New</span></div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Christmas Combo</div><div class="menu-item-desc">Tamale &amp; cheese enchilada smothered with Pork GC, Beef RC &amp; cheese</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Christmas Combo w/Taco</div></div><div class="menu-item-price">$21.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ENCHILADAS ── -->
+  <div id="tab-enchiladas" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/green_chile_enchiladas.jpg" alt="Stacked &amp; Rolled Enchiladas — Served w/rice, beans &amp; garnish salad" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Stacked &amp; Rolled Enchiladas — Served w/rice, beans &amp; garnish salad</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Stacked Enchiladas</div>
+      <div class="menu-category-subtitle">New Mexico style — stacked flat, smothered in sauce</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef RC Stack <span class="menu-item-badge badge-fav">Fan Fave</span></div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC Stack</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC Stack</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken GC Stack</div></div><div class="menu-item-price">$14.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Rolled Enchiladas</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">3 Spicy Green Cheese Enchiladas <span class="menu-item-badge badge-fav">New</span></div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">3 Cheese Enchiladas</div><div class="menu-item-desc">Smothered in NM Red, green or Christmas sauce</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC &amp; Potato</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shredded Beef</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie &amp; Hatch GC</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bean Cheese &amp; Hatch GC</div></div><div class="menu-item-price">$10.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest Enchiladas</div><div class="menu-item-desc">Flour tortillas stuffed with cheese, smothered in spicy crema, topped with black bean mix, served w/rice. w/Meat $17.99 &middot; w/Shrimp $18.99</div></div><div class="menu-item-price">$15.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FAJITAS & BIG BURRITOS ── -->
+  <div id="tab-fajitas" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/combo_fajitas.jpg" alt="Fajitas &amp; Big Burritos" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Fajitas &amp; Big Burritos</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Fajitas</div>
+      <div class="menu-category-subtitle">Served w/rice, beans, guacamole &amp; sour cream. Choice of corn tortillas, flour or sopapillas</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Hatch GC &amp; Veggie</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Grilled Chicken</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak</div></div><div class="menu-item-price">$20.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shrimp</div></div><div class="menu-item-price">$22.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Any 2</div></div><div class="menu-item-price">$24.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shrimp, Steak &amp; Chicken</div></div><div class="menu-item-price">$25.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest</div><div class="menu-item-desc">Bell peppers, onions &amp; black bean mix</div></div><div class="menu-item-price">$16.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Big Burritos</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shrimp Burrito</div><div class="menu-item-desc">Beans, rice, guacamole, cheese, pico de gallo &amp; chipotle aioli</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Grande Burrito</div><div class="menu-item-desc">Shredded Beef, beans, rice, cheese, guacamole &amp; pico de gallo</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Surf &amp; Turf Burrito <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Beans, rice, steak &amp; shrimp with chipotle aioli</div></div><div class="menu-item-price">$19.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BURGERS & SANDWICHES ── -->
+  <div id="tab-burgers" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/gc_burger_close.jpg" alt="Burgers &amp; Sandwiches — Served with Fries" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Burgers &amp; Sandwiches — Served with Fries (upgrade to onion rings, soup or salad +$2.29 or Crazy Fries +$3.99)</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Burgers</div>
+      <div class="menu-category-subtitle">All burgers on a toasted brioche bun with a handmade patty</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Hatch GC Cheeseburger <span class="menu-item-badge badge-fav">Fan Fave</span></div><div class="menu-item-desc">Cheddar cheese, Hatch GC, lettuce, tomato &amp; 1,000 island</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Boracho Burger</div><div class="menu-item-desc">Cheddar cheese, bacon, Hatch GC, chipotle aioli and an over easy egg</div></div><div class="menu-item-price">$19.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Rio Rancho Cheeseburger</div><div class="menu-item-desc">Cheddar cheese, bacon, lettuce, tomato &amp; BBQ sauce</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Cantina Cheeseburger</div><div class="menu-item-desc">Cheddar cheese, lettuce, tomato &amp; 1,000 island</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Albuquerque Burger <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">American cheese, Hatch GC, mustard, mayo, lettuce &amp; tomato</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">California Burger <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Cheddar cheese, mayo, avocado, pickles, lettuce &amp; tomato</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">The Dodger</div><div class="menu-item-desc">Cajun seasoned grilled chicken, cheddar cheese, lettuce, tomato, chipotle aioli &amp; a fried jalapeño</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">The Angel</div><div class="menu-item-desc">Grilled chicken, cheddar cheese, mayo, avocado, lettuce &amp; tomato</div></div><div class="menu-item-price">$16.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Melts &amp; Sandwiches</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Santa Rosa Patty Melt</div><div class="menu-item-desc">Grilled sourdough, handmade patty, cheddar cheese, grilled onions &amp; 1,000 island</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">GC Cheesy Melt</div><div class="menu-item-desc">Grilled Sourdough, melted cheddar cheese loaded with Hatch green chiles</div></div><div class="menu-item-price">$11.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shredded Beef Melt</div><div class="menu-item-desc">Toasted Sourdough, shredded beef, mayo, Hatch GC &amp; melted cheddar cheese</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">GC Chicken Melt</div><div class="menu-item-desc">Grilled Sourdough, grilled chicken breast, melted cheddar, GC aioli, sliced avocado and Hatch GC</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken Salad Sandwich <span class="menu-item-badge badge-fav">It's Back!</span></div><div class="menu-item-desc">Toasted sourdough filled with diced grilled chicken mixed with bacon mayo &amp; jalapeños</div></div><div class="menu-item-price">$16.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CRAZY FRIES ── -->
+  <div id="tab-crazyfries" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/green_chile_fries.jpg" alt="Crazy Fries" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Crazy Fries — Small | Large</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Crazy Fries</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chorizo Fries</div><div class="menu-item-desc">Chorizo, cotija cheese, fresh sliced jalapeños, cilantro &amp; chipotle aioli</div></div><div class="menu-item-price">$12.99 / $15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork Green Chile Fries</div><div class="menu-item-desc">Pork GC &amp; cheese</div></div><div class="menu-item-price">$11.99 / $15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile Fries</div><div class="menu-item-desc">Beef RC &amp; cheese</div></div><div class="menu-item-price">$13.99 / $17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Loaded Fries</div><div class="menu-item-desc">Cheese, jalapeños, bacon &amp; sour cream</div></div><div class="menu-item-price">$10.99 / $15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Monster Fries</div><div class="menu-item-desc">Grilled onion, cheddar cheese &amp; 1,000 island</div></div><div class="menu-item-price">$10.99 / $14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Asada Fries</div><div class="menu-item-desc">Beans, cheese, asada, guacamole &amp; sour cream</div></div><div class="menu-item-price">$13.99 / $17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Buffalo Fries</div><div class="menu-item-desc">Chicken strips tossed in buffalo sauce, cheese &amp; GC Ranch</div></div><div class="menu-item-price">$12.99 / $15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest Fries</div><div class="menu-item-desc">Black bean mix, cheese, chipotle aioli</div></div><div class="menu-item-price">$11.99 / $14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Green Chile Garlic Fries</div><div class="menu-item-desc">Hatch GC, garlic &amp; cotija cheese</div></div><div class="menu-item-price">$10.99 / $14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Cajun or Seasoned Fries</div></div><div class="menu-item-price">$7.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TACOS, TOSTADAS & SOPES ── -->
+  <div id="tab-tacos" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/tostada_sign.jpg" alt="Tacos, Tostadas &amp; Sopes" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Tacos, Tostadas &amp; Sopes</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Tacos, Tostadas &amp; Sopes</div>
+      <div class="menu-category-subtitle">Meat choices: Pork GC, Beef RC, Steak, Chicken, Shredded Beef, Ground Beef &amp; Potato GC &middot; +$1 Shrimp</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Taco</div><div class="menu-item-desc">Soft or fried shell with meat, cheese, lettuce &amp; tomato. Shrimp comes with chipotle aioli, cabbage &amp; pico</div></div><div class="menu-item-price">$4.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Tostada</div><div class="menu-item-desc">Flat fried corn tortilla with beans, meat, cheese, lettuce &amp; tomato</div></div><div class="menu-item-price">$6.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Sope</div><div class="menu-item-desc">Thick corn dish topped with beans, meat, cheese, lettuce, tomato &amp; sour cream</div></div><div class="menu-item-price">$6.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOWLS ── -->
+  <div id="tab-bowls" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/birria_soup.jpg" alt="Bowls" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Bowls — Cabbage, beans, rice, choice of meat, cheese, guacamole &amp; tomatoes</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Bowls</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork Green Chile</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shredded Beef</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC &amp; Potato</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Shrimp</div></div><div class="menu-item-price">$17.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BREAKFAST ── -->
+  <div id="tab-breakfast" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/chicken_waffle.jpg" alt="Breakfast" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Breakfast</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Specialty Plates</div>
+      <div class="menu-category-subtitle">Plates served with potatoes, beans &amp; 2 eggs. Choice of corn or flour tortillas or sopapillas</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC &amp; Eggs</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef RC &amp; Eggs</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bacon &amp; Eggs</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak w/GC &amp; Eggs</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chorizo &amp; Eggs</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Machaca &amp; Eggs</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC &amp; Potato &amp; Eggs</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Just Potatoes, Beans &amp; Eggs</div></div><div class="menu-item-price">$13.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Chilaquiles</div>
+      <div class="menu-category-subtitle">Chips, sauce, eggs &amp; cheese served with beans</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork Green Chile</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef Red Chile</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Green w/Steak</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Green</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">New Mexico Green</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">New Mexico Red</div></div><div class="menu-item-price">$13.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Huevos Rancheros</div>
+      <div class="menu-category-subtitle">2 Corn tortillas topped with beans, 2 eggs, sauce &amp; sliced avocado, served with potatoes</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef RC</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">New Mexico Red</div></div><div class="menu-item-price">$13.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">New Mexico Green</div></div><div class="menu-item-price">$13.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Green</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Chile de Arbol</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Spicy Green &amp; Steak</div></div><div class="menu-item-price">$17.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">New Mexico Hash</div>
+      <div class="menu-category-subtitle">Breakfast potatoes &amp; eggs smothered in your favorite meat or veggies, topped with cheese</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef RC</div></div><div class="menu-item-price">$18.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chorizo</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bacon &amp; GC</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie &amp; Hatch GC</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Southwest w/Chorizo</div><div class="menu-item-desc">Black beans, corn, green chile, chipotle aioli &amp; cilantro (no sauce)</div></div><div class="menu-item-price">$17.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Breakfast Sopapillas, Burritos &amp; Navajo Taco</div>
+      <div class="menu-category-subtitle">Beans, cheese, eggs &amp; choice of meat &middot; Breakfast Navajo Taco: fry bread topped with beans, cheese, eggs &amp; choice of meat</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chorizo &amp; Egg</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC &amp; Eggs</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beef RC &amp; Egg</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Machaca &amp; Egg</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Steak GC &amp; Eggs</div></div><div class="menu-item-price">$17.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bacon &amp; Eggs</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ground Beef GC &amp; Potato &amp; Eggs</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie GC &amp; Eggs</div></div><div class="menu-item-price">$15.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Hatch GC</div></div><div class="menu-item-price">$13.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Scrambles</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bacon Avocado &amp; Cheese</div><div class="menu-item-desc">3 egg scramble served with potatoes &amp; toast</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Veggie &amp; Hatch GC</div><div class="menu-item-desc">3 eggs scrambled with bell peppers, onions &amp; GC served with potatoes &amp; toast</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Hatch GC &amp; Cheese</div><div class="menu-item-desc">3 egg scramble served with potatoes &amp; toast</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pork GC Scramble</div><div class="menu-item-desc">3 eggs omelette style stuffed with cheese and smothered in Pork GC. Served with potatoes and toast</div></div><div class="menu-item-price">$16.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Breakfast Quesadillas</div>
+      <div class="menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Bacon &amp; Egg Quesadilla</div><div class="menu-item-desc">Bacon, eggs, green chile &amp; cheese</div></div><div class="menu-item-price">$14.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Randy Special <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Hatch GC, eggs &amp; cheese smothered in Pork GC</div></div><div class="menu-item-price">$16.99</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Pancakes &amp; Waffles</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Chicken &amp; Waffles <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">3 chicken strips &amp; a Belgian Waffle</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Short Stack</div><div class="menu-item-desc">2 fluffy pancakes served with butter and syrup</div></div><div class="menu-item-price">$10.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Pancake Bacon &amp; Eggs</div><div class="menu-item-desc">2 eggs, 2 bacon &amp; 2 pancakes</div></div><div class="menu-item-price">$16.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Apple Pancakes</div><div class="menu-item-desc">2 fluffy pancakes with apple compote, powdered sugar &amp; whipped cream</div></div><div class="menu-item-price">$13.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Belgian Waffle <span class="menu-item-badge badge-fav">New</span></div><div class="menu-item-desc">Dusted with powdered sugar</div></div><div class="menu-item-price">$12.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Dulce de Leche Pancakes</div><div class="menu-item-desc">2 fluffy pancakes drizzled in dulce de leche, powdered sugar &amp; whipped cream</div></div><div class="menu-item-price">$12.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DESSERTS ── -->
+  <div id="tab-desserts" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/strawberry_waffle.jpg" alt="Desserts" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Desserts</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Sweet Finishes</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Sopapilla Sundae <span class="menu-item-badge badge-fav">House Special</span></div><div class="menu-item-desc">4 sopapillas dusted with powdered sugar, drizzled with chocolate &amp; caramel sauce with a scoop of ice cream &amp; whipped cream</div></div><div class="menu-item-price">$9.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Sopapillas</div><div class="menu-item-desc">Plain, powdered sugar or cinnamon &amp; sugar. 4 pieces $6.99 &middot; 8 pieces $10.99</div></div><div class="menu-item-price">from $6.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Sopapillas Filled w/Peach, Pumpkin, Apple or Cherry</div><div class="menu-item-desc">Dusted with powdered sugar, served with ice cream &amp; drizzled with dulce de leche</div></div><div class="menu-item-price">$10.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Ice Cream Sundae</div><div class="menu-item-desc">Chocolate or caramel syrup with whipped cream</div></div><div class="menu-item-price">$5.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Root Beer Float</div></div><div class="menu-item-price">$5.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Strawberry Sundae</div></div><div class="menu-item-price">$6.99</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DRINKS ── -->
+  <div id="tab-drinks" class="menu-panel">
+    <div class="menu-tab-banner" style="background:#0a140a;"><img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/flautas_beer.jpg" alt="Drinks" style="width:100%;height:100%;object-fit:cover;display:block;opacity:0.82;">
+      <div class="menu-tab-banner-label">Drinks</div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Free Refills</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Coffee, Decaf <span class="menu-item-badge badge-fav">Free Refills</span></div></div><div class="menu-item-price">$3.69</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Flavored Tea &amp; Lemonade <span class="menu-item-badge badge-fav">Free Refills</span></div><div class="menu-item-desc">Peach, raspberry, watermelon &amp; mango</div></div><div class="menu-item-price">$4.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Coke, Diet Coke, Dr Pepper, Root Beer, Sprite <span class="menu-item-badge badge-fav">Free Refills</span></div></div><div class="menu-item-price">$3.69</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Iced Tea, Lemonade &amp; Arnold Palmer <span class="menu-item-badge badge-fav">Free Refills</span></div></div><div class="menu-item-price">$3.69</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">No Refills</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Hot Tea or Hot Chocolate</div></div><div class="menu-item-price">$3.59</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Strawberry Horchata or Lemonade</div></div><div class="menu-item-price">$4.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Horchata</div></div><div class="menu-item-price">$4.49</div></div>
+      </div>
+    </div>
+    <div class="menu-category fade-in-up">
+      <div class="menu-category-title">Cocktails &amp; Beer</div>
+      <div class="menu-items-2col menu-items-list">
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Michelada</div><div class="menu-item-desc">w/domestic $7.49 &middot; w/import $8.49</div></div><div class="menu-item-price">from $7.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Margarita</div><div class="menu-item-desc">With tajin rim</div></div><div class="menu-item-price">$7.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Strawberry Margarita</div></div><div class="menu-item-price">$7.99</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Mango or Peach Margarita</div></div><div class="menu-item-price">$7.49</div></div>
+        <div class="menu-item-row"><div class="menu-item-info"><div class="menu-item-name">Beer, Wine &amp; Seltzers</div><div class="menu-item-desc">Ask your server for selection</div></div><div class="menu-item-price">Ask Server</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-cta-wrap fade-in-up">
+    <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="btn-primary" style="display:inline-flex;">Order Online &rarr;</a>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--adobe), var(--chile), var(--gold), var(--adobe));opacity:0.35;"></div>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header">
+    <div>
+      <div class="section-eyebrow light">Guest Love</div>
+      <h2 class="section-title light">What La Habra is Saying</h2>
+      <p class="section-subtitle light">Real words from real guests — no scripts, no filters.</p>
+    </div>
+    <div class="score-block">
+      <span class="score-num">4.5</span>
+      <div class="score-stars-custom">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="score-label">Google Reviews</div>
+    </div>
+  </div>
+
+  <!-- ROW 1: slides LEFT -->
+  <div class="rev-rows-wrap" id="revRowsWrap">
+    <div class="rev-row" id="revRow0"></div>
+    <!-- ROW 2: slides RIGHT -->
+    <div class="rev-row" id="revRow1"></div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.3;"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-layout">
+    <div class="about-img-stack fade-in-up">
+      <div class="about-card-big" style="overflow:hidden;padding:0;">
+        <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/strawberry_waffle.jpg" alt="Strawberry waffle at The Green Chile" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="about-card-small" style="overflow:hidden;padding:0;">
+        <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/chile_relleno_mural.jpg" alt="Chile relleno at The Green Chile" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="about-quote-card">
+        <p class="about-quote-text">"You will want more — that's our promise."</p>
+        <div class="about-quote-attr">&mdash; The Esqueda Family</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title">More Than a Restaurant &mdash;<br>It's <em style="color:var(--chile);">Family.</em></h2>
+      <p class="section-subtitle">Born from New Mexico roots, built in Southern California, and running on love since 2013.</p>
+      <p style="font-size:0.92rem;color:#4A5E3A;line-height:1.8;margin-top:1.5rem;">Tony and Lina Esqueda brought the authentic flavors of Tucumcari, New Mexico to La Habra over a decade ago. With more than 30 years of cooking tradition behind them, The Green Chile is a family restaurant in the truest sense &mdash; Tony in the kitchen every day, Lina greeting guests by name, and their children carrying on the tradition. Every dish is made fresh, every day, from recipes that have been in the family for generations.</p>
+      <div class="about-values">
+        <div class="value-item fade-in-up"><div class="value-dot"></div><div class="value-text"><strong>Authentic Recipes</strong> &mdash; Rooted in New Mexico heritage &amp; family tradition.</div></div>
+        <div class="value-item fade-in-up"><div class="value-dot rust"></div><div class="value-text"><strong>Made Fresh Daily</strong> &mdash; Everything cooked to order, never frozen or reheated.</div></div>
+        <div class="value-item fade-in-up"><div class="value-dot"></div><div class="value-text"><strong>Family Run</strong> &mdash; The Esqueda family is here every day, personally serving you.</div></div>
+        <div class="value-item fade-in-up"><div class="value-dot rust"></div><div class="value-text"><strong>Community Focused</strong> &mdash; Proud to serve La Habra &amp; the surrounding community.</div></div>
+      </div>
+      <div class="about-info fade-in-up" style="grid-column:1/-1;justify-items:center;text-align:center;">
+        <div class="info-item" style="justify-content:center;grid-column:1/-1;">
+          <div class="info-icon-wrap"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg></div>
+          <div><div class="info-label">Hours</div><div class="info-val">Mon–Thu 11am–7pm &nbsp;|&nbsp; Fri 11am–8pm<br>Sat 10am–8pm &nbsp;|&nbsp; Sun 10am–7pm</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+          <div><div class="info-label">Location</div><div class="info-val"><a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="color:var(--chile);text-decoration:none;">2050 W Whittier Blvd, La Habra</a></div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon-wrap"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+          <div><div class="info-label">Phone</div><div class="info-val"><a href="tel:5624483674" style="color:var(--chile);text-decoration:none;">(562) 448-3674</a></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--gold), var(--chile), var(--adobe), var(--gold));opacity:0.3;"></div>
+
+<!-- CATERING -->
+<section id="catering">
+  <div class="catering-morph"></div>
+  <div class="catering-grid">
+    <div>
+      <div class="section-eyebrow light">Catering</div>
+      <h2 class="section-title light">Bring New Mexico<br>to Your Event</h2>
+      <p class="catering-desc">From family gatherings to corporate luncheons &mdash; the authentic flavors and warmth of The Green Chile come to you.</p>
+      <div class="catering-packages">
+
+        <!-- Fiesta Package -->
+        <div class="pkg-card fade-in-up">
+          <div class="pkg-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+          </div>
+          <div><div class="pkg-name">Fiesta Package</div><p class="pkg-desc">Full New Mexico spread &mdash; sopapillas, enchiladas, green chile &amp; traditional sides for any celebration.</p></div>
+        </div>
+
+        <!-- Family Style -->
+        <div class="pkg-card fade-in-up">
+          <div class="pkg-icon-wrap rust">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <div><div class="pkg-name">Family Style</div><p class="pkg-desc">Generous family-style trays &mdash; perfect for birthdays, quincea&ntilde;eras, and home gatherings of any size.</p></div>
+        </div>
+
+        <!-- Corporate Package -->
+        <div class="pkg-card fade-in-up">
+          <div class="pkg-icon-wrap rust">
+            <svg viewBox="0 0 24 24" fill="white">
+              <rect x="3" y="8" width="18" height="13" rx="2" fill="none" stroke="white" stroke-width="1.3"/>
+              <path d="M8 8 V6 Q8 3 12 3 Q16 3 16 6 V8" fill="none" stroke="white" stroke-width="1.3"/>
+              <line x1="3" y1="13" x2="21" y2="13" stroke="white" stroke-width="1" opacity="0.5"/>
+              <circle cx="12" cy="13" r="1.5" fill="white" opacity="0.8"/>
+            </svg>
+          </div>
+          <div><div class="pkg-name">Corporate Package</div><p class="pkg-desc">Box lunches, buffet-style spreads, or platter deliveries for your team &mdash; fresh, on time, unforgettable.</p></div>
+        </div>
+
+      </div>
+      <a href="tel:5624483674" class="catering-phone-btn">
+        <div class="phone-circle">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        Call Us: (562) 448-3674
+      </a>
+    </div>
+    <div class="catering-form-wrap fade-in-up">
+      <div class="form-title">Get a Free Quote</div>
+      <p class="form-sub">We'll get back to you within 24 hours to discuss your event details.</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Maria"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Esqueda"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="maria@email.com"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="(562) 555-0000"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Event Date</label><input type="date"></div>
+        <div class="form-group"><label>Guest Count</label><select><option>10&ndash;25 guests</option><option>25&ndash;50 guests</option><option>50&ndash;100 guests</option><option>100+ guests</option></select></div>
+      </div>
+      <div class="form-group"><label>Event Type</label><select><option>Birthday Party</option><option>Corporate Lunch / Breakfast</option><option>Quincea&ntilde;era</option><option>Wedding / Anniversary</option><option>Family Gathering</option><option>School / Community Event</option><option>Other</option></select></div>
+      <div class="form-group"><label>Tell us about your event</label><textarea rows="3" placeholder="Any special requests, dietary needs, or details about your gathering..."></textarea></div>
+      <button class="form-submit" onclick="handleFormSubmit(this)">Send Catering Request</button>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="width:100%;height:6px;background:linear-gradient(90deg, var(--chile), var(--gold), var(--adobe), var(--chile));opacity:0.35;"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/logo_combined.png" alt="The Green Chile Restaurant" style="height:80px;width:auto;object-fit:contain;display:block;margin-bottom:1.2rem;">
+      <p class="footer-tagline">"Whatever you choose, you will want more."</p>
+      <div class="footer-contact-line">&#9679; <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="color:rgba(245,240,232,0.55);text-decoration:none;">2050 W Whittier Blvd, La Habra, CA 90631</a></div>
+      <div class="footer-contact-line">&#9679; <a href="tel:5624483674" style="color:rgba(245,240,232,0.55);text-decoration:none;">(562) 448-3674</a></div>
+      <div class="footer-contact-line" style="margin-top:10px;"><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" style="color:var(--sage);font-weight:500;">Order Online via Toast &rarr;</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Explore</div>
+      <ul class="footer-links">
+        <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#catering">Catering</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Order</div>
+      <ul class="footer-links">
+        <li><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank">Order Online</a></li>
+        <li><a href="tel:5624483674">Call to Order</a></li>
+        <li><a href="#catering">Catering Request</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <div class="hours-grid">
+        <div class="hours-row">Location<span>La Habra, CA</span></div>
+        <div class="hours-row">Address<span>2050 W Whittier Blvd</span></div>
+        <div class="hours-row">Phone<span>(562) 448-3674</span></div>
+      </div>
+      <div style="margin-top:14px;font-size:0.75rem;color:rgba(245,240,232,0.25);">*Hours subject to change. Call to confirm.</div>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <div>&copy; 2025 The Green Chile Restaurant. Made with <span class="footer-heart">&#9829;</span> in La Habra, CA.</div>
+    <div>Est. 2013 &middot; 2050 W Whittier Blvd</div>
+  </div>
+</footer>
+
+<script>
+  /* --- Nav scroll shadow --- */
+  const gcNav = document.getElementById('gc-nav');
+  window.addEventListener('scroll', () => {
+    gcNav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* --- Active link detection --- */
+  const gcNavAs = document.querySelectorAll('.gc-nav-a[data-s]');
+  const gcSections = ['menu','reviews','about','catering'];
+  function gcUpdateActive() {
+    const scrollY = window.scrollY + window.innerHeight * 0.3;
+    let current = 'menu';
+    gcSections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollY) current = id;
+    });
+    gcNavAs.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-s') === current);
+    });
+  }
+  window.addEventListener('scroll', gcUpdateActive, { passive: true });
+  window.addEventListener('resize', gcUpdateActive, { passive: true });
+  gcUpdateActive();
+
+  /* --- Mobile overlay --- */
+  function gcToggleMob() {
+    const m = document.getElementById('gcMobMenu');
+    const h = document.getElementById('gcHamBtn');
+    m.classList.toggle('open');
+    h.classList.toggle('open');
+    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+  }
+  function gcCloseMob() {
+    document.getElementById('gcMobMenu').classList.remove('open');
+    document.getElementById('gcHamBtn').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function alignHoursPill() {
+    const badge = document.querySelector('.hero-badge');
+    const pill = document.getElementById('hoursPill');
+    if (badge && pill) {
+      const badgeTop = badge.getBoundingClientRect().top + window.scrollY;
+      const pillH = pill.offsetHeight;
+      const badgeH = badge.offsetHeight;
+      pill.style.top = (badgeTop + (badgeH / 2) - (pillH / 2) - 60) + 'px';
+    }
+  }
+  function alignStatCards() {
+    const pill = document.getElementById('hoursPill');
+    const stats = document.querySelector('.hero-stats');
+    if (pill && stats) {
+      const pillTop = pill.getBoundingClientRect().top + window.scrollY;
+      const pillLeft = pill.getBoundingClientRect().left;
+      const pillW = pill.offsetWidth;
+      const statsW = stats.offsetWidth;
+      const pillH = pill.offsetHeight;
+      const pillCenterX = window.innerWidth - pillLeft - pillW / 2;
+      stats.style.top = (pillTop + pillH + 40) + 'px';
+      stats.style.right = (pillCenterX - statsW / 2) + 'px';
+    }
+  }
+  window.addEventListener('load', () => { alignHoursPill(); alignStatCards(); });
+  window.addEventListener('resize', () => { alignHoursPill(); alignStatCards(); });
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.transform = `translate(${e.clientX - 2}px, ${e.clientY - 2}px)`;
+  });
+
+  // Press ripple
+  document.addEventListener('mousedown', e => {
+    const ripple = document.createElement('div');
+    ripple.className = 'press-ripple';
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top = e.clientY + 'px';
+    document.body.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 400);
+  });
+
+  function showTab(tab, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+    document.querySelectorAll('#tab-' + tab + ' .fade-in-up').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), i * 60);
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+  function handleFormSubmit(btn) {
+    const form = btn.closest('.catering-form-wrap');
+    const inputs = form.querySelectorAll('input[type="text"]');
+    const name = (inputs[0] ? inputs[0].value : '') + ' ' + (inputs[1] ? inputs[1].value : '');
+    const email = form.querySelector('input[type="email"]') ? form.querySelector('input[type="email"]').value : '';
+    const phone = form.querySelector('input[type="tel"]') ? form.querySelector('input[type="tel"]').value : '';
+    const date = form.querySelector('input[type="date"]') ? form.querySelector('input[type="date"]').value : '';
+    const selects = form.querySelectorAll('select');
+    const guests = selects[0] ? selects[0].value : '';
+    const eventType = selects[1] ? selects[1].value : '';
+    const notes = form.querySelector('textarea') ? form.querySelector('textarea').value : '';
+
+    const subject = encodeURIComponent('Catering Request from ' + name.trim());
+    const body = encodeURIComponent(
+      'Name: ' + name.trim() + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + phone + '\n' +
+      'Event Date: ' + date + '\n' +
+      'Guest Count: ' + guests + '\n' +
+      'Event Type: ' + eventType + '\n\n' +
+      'Notes:\n' + notes
+    );
+
+    window.location.href = 'mailto:info@greenchilerestaurant.com?subject=' + subject + '&body=' + body;
+
+    setTimeout(() => {
+      btn.textContent = "Request Sent — We'll be in touch within 24 hours.";
+      btn.style.background = '#4A8B4A';
+      btn.disabled = true;
+    }, 300);
+  }
+
+  /* ── HORIZONTAL REVIEW MARQUEE ── */
+  (function() {
+    // All real reviews (no owner responses)
+    const reviews = [
+      { text: '"What a hidden gem! My husband had a Navajo taco with pork green chile and I had a sopapilla with ground beef and potato, smothered Christmas style. Outstanding."', name: 'Heidi F.', meta: 'Local Guide · 49 reviews', avatar: 'HF', avatarClass: '' },
+      { text: '"Amazing food. Be sure to try the Sopapilla. The Jalapeño poppers were amazing, and I also ordered pork green chile bowl that was super yummy. New favorite: Southwest Enchiladas."', name: 'Dana S.', meta: 'Local Guide · 12 reviews', avatar: 'DS', avatarClass: 'rust-av' },
+      { text: '"My wife and I enjoyed the green chile pork chilaquiles this morning. We met Gabby who was friendly and provided excellent service. A big thank you to the excellent chefs."', name: 'Ron D.', meta: '11 reviews', avatar: 'RD', avatarClass: '' },
+      { text: '"One of a kind! Living in Southern California, New Mexico food is always lacking — until I found this gem with their Navajo tacos and sopapillas. Outstanding!"', name: 'Don H.', meta: 'Local Guide · 104 reviews', avatar: 'DH', avatarClass: 'rust-av' },
+      { text: '"The Green Chile is a fantastic place to experience New Mexico style food. The chili and sopapillas are a must."', name: 'Mike J.', meta: 'Local Guide · 68 reviews', avatar: 'MJ', avatarClass: '' },
+      { text: '"I had the wet pork burrito, the meat was so tender and juicy, the flavor was excellent. The rice was perfectly made and tasty. Will go back again."', name: 'Cathy S.', meta: '3 reviews', avatar: 'CS', avatarClass: 'rust-av' },
+      { text: '"The red cheese enchiladas were excellent — the PERFECT amount of cheese. The red salsa was excellent. The chips were perfect! Highly recommend checking this place out!"', name: 'Sagar L.', meta: 'Local Guide · 506 reviews', avatar: 'SL', avatarClass: '' },
+      { text: '"My first time trying the Green Chile. What an amazing experience!! We tried the red chili beef, green chili with ground beef and potatoes, and an apple sopapilla. All delicious."', name: 'Crystal M.', meta: 'Local Guide · 15 reviews', avatar: 'CM', avatarClass: 'rust-av' },
+      { text: '"Breakfast, or lunch menu. Green or red chili. Sopapillas outstanding. Chips and salsa to start. Great bowl of guacamole. Tacos, burritos, filled sopapillas, chilaquillas — something for everyone."', name: 'Darlene M.', meta: 'Local Guide · 9 reviews', avatar: 'DM', avatarClass: '' },
+      { text: '"This restaurant was awesome. They had outdoor seating available for sit down dining. The service was great. The food was spectacular. A real gem! As authentic New Mexican as possible in SoCal."', name: 'Lori Y.', meta: 'Local Guide · 103 reviews', avatar: 'LY', avatarClass: 'rust-av' },
+      { text: '"The quality here is amazing especially for the price. Everything seems freshly made and the portions are very generous. I\'ve tried the Navajo taco and the green chile cheeseburger — both excellent."', name: 'Jess', meta: 'Local Guide · 81 reviews', avatar: 'JE', avatarClass: '' },
+      { text: '"Two words: Navaho tacos! Also savory and sweet sopapillas. A mom and pop place with amazing food. Highly recommend!!"', name: 'Elizabeth W.', meta: 'Local Guide · 341 reviews', avatar: 'EW', avatarClass: 'rust-av' },
+      { text: '"Amazing food! The sopapillas are a MUST TRY — you will not regret it. I also ordered the strawberry horchata which was tasty. Sopapillas were the star of the show, super delicious."', name: 'Daisy', meta: 'Local Guide · 157 reviews', avatar: 'DA', avatarClass: '' },
+      { text: '"Wow, what can I say about this place. The food was great and the staff was great. We went in on Sunday with a large group and they were very accommodating. Recommend the pork green chile sopapilla."', name: 'John T.', meta: 'Local Guide · 32 reviews', avatar: 'JT', avatarClass: 'rust-av' },
+      { text: '"We love the Navajo tacos! Freshly cooked fry bread, so crispy on the outside, soft on the inside. Theirs are the best this side of the Colorado River!"', name: 'Skyhiker', meta: 'Local Guide · 22 reviews', avatar: 'SK', avatarClass: '' },
+      { text: '"One of my favorite restaurants. Chile Verde is delicious. Double stack cheese enchiladas are some of the best around. Chili verde Sopapillas are so good. Definitely worth a visit."', name: 'Bob B.', meta: 'Local Guide · 180 reviews', avatar: 'BB', avatarClass: 'rust-av' },
+      { text: '"Never had New Mexico style food before and I have been sold! Great food, awesome service, and modest prices. Especially recommend the stuffed red chili beef sopapilla and the bean dip."', name: 'Marcos F.', meta: 'Local Guide · 32 reviews', avatar: 'MF', avatarClass: '' },
+      { text: '"The pork green chili enchiladas are amazing. Highly recommend! Best menudo in town as well."', name: 'Ellen M.', meta: 'Local Guide · 17 reviews', avatar: 'EM', avatarClass: 'rust-av' },
+      { text: '"By far some of the best Spanish/Southwest/Mexican food in California. Authentic New Mexico style food fused with local Mexican flavor. Never had a sopapilla? Now\'s your chance."', name: 'Chuck C.', meta: 'Local Guide · 525 reviews', avatar: 'CC', avatarClass: '' },
+      { text: '"Finding Southwestern cuisine around here is challenging. Thankfully, we found The Green Chile. Its food is decidedly better than its local competitors\'. The service is great."', name: 'Raymond B.', meta: 'Local Guide · 217 reviews', avatar: 'RB', avatarClass: 'rust-av' },
+      { text: '"I really liked the pozole. I\'m very picky about pozole since I make a pretty good one myself, and this place certainly impressed me. My husband liked the menudo as well."', name: 'Lola M.', meta: 'Local Guide · 460 reviews', avatar: 'LM', avatarClass: '' },
+      { text: '"Stacked enchiladas Chile Verde pork was delicious! Beef and potato empanada was right out of Taos Pueblo! Awesome authentic New Mexico style food."', name: 'Samuel T.', meta: 'Local Guide · 85 reviews', avatar: 'ST', avatarClass: 'rust-av' },
+      { text: '"New Mexico food is hard to find in So California, but this is the real deal. From stuffed sopapillas to Navajo tacos and flat enchiladas topped with a fried egg. All so delicious."', name: 'Michelle M.', meta: '9 reviews', avatar: 'MM', avatarClass: '' },
+      { text: '"Delicious, did not disappoint on our first visit. Navajo Taco was large, delicious and very filling. Friendly, fast service."', name: 'Lisa D.', meta: 'Local Guide · 306 reviews', avatar: 'LD', avatarClass: 'rust-av' },
+      { text: '"When you\'re craving New Mexico style food, this is THE place in this area. Have always loved the food here."', name: 'George S.', meta: '7 reviews', avatar: 'GS', avatarClass: '' },
+    ];
+
+    // Avatar SVG icons — alternating set of 4
+    function avatarSVG(idx) {
+      const icons = [
+        // person
+        `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none"/><path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`,
+        // map pin
+        `<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none"/><circle cx="12" cy="9" r="2" stroke="rgba(255,255,255,0.9)" stroke-width="1.2" fill="none"/></svg>`,
+        // fork & knife
+        `<svg viewBox="0 0 24 24"><path d="M11 2v20M7 2v5a4 4 0 0 0 4 4" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M17 2v6l-2 4v8" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`,
+        // leaf
+        `<svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.04L5.71 21c1-1 2-2 3-3 2.31 1.06 5.27.76 7.29-1.26C19 13.5 20 4 20 4c-1 0-2.07.2-3 .5" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" fill="none" stroke-linecap="round"/><line x1="3" y1="21" x2="6" y2="18" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round"/></svg>`,
+      ];
+      return icons[idx % icons.length];
+    }
+
+        function imgCardHTML(idx) {
+      const reviewPhotos = [
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/tostada_sign.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/flautas_beer.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/enchiladas_beer.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/red_chile_beef_sopapilla.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/patty_melt_sign.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/taco_sign2.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/big_burrito_old.jpg",
+        "https://raw.githubusercontent.com/exemptior/GreenChile/main/assets/images/breakfast_green_chile.jpg"
+      ];
+      const src = reviewPhotos[idx % reviewPhotos.length];
+      return `<div class="rev-img-card" style="padding:0;overflow:hidden;">
+        <img src="${src}" alt="Food at The Green Chile" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;">
+      </div>`;
+    }
+
+    // Star SVG
+    function starsSVG() {
+      const s = `<svg class="rev-card-star" viewBox="0 0 24 24" style="width:14px;height:14px;fill:var(--gold);"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+      return `<div class="rev-card-stars">${s.repeat(5)}</div>`;
+    }
+
+    function makeCard(rev, iconIdx) {
+      return `<div class="rev-card">
+        ${starsSVG()}
+        <p class="rev-card-text">${rev.text}</p>
+        <div class="rev-card-footer">
+          <div class="rev-avatar ${rev.avatarClass}">${avatarSVG(iconIdx)}</div>
+          <div>
+            <div class="rev-name">${rev.name}</div>
+            <div class="rev-meta">${rev.meta}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // Shared image counter across both rows
+    let imgIdx = 0;
+
+    // Weave: every other item is an image card (positions 1, 3, 5...)
+    function buildRowItems(reviewSlice) {
+      const items = [];
+      let iconIdx = 0;
+      reviewSlice.forEach((rev, i) => {
+        items.push(makeCard(rev, iconIdx++));
+        // insert image placeholder after every 2 reviews
+        if ((i + 1) % 2 === 0) items.push(imgCardHTML(imgIdx++));
+      });
+      return items;
+    }
+
+    // Split reviews into two rows
+    const midpoint = Math.ceil(reviews.length / 2);
+    const row0Reviews = reviews.slice(0, midpoint);
+    const row1Reviews = reviews.slice(midpoint);
+
+    const row0Items = buildRowItems(row0Reviews);
+    const row1Items = buildRowItems(row1Reviews);
+
+    const row0El = document.getElementById('revRow0');
+    const row1El = document.getElementById('revRow1');
+    if (!row0El || !row1El) return;
+
+    // Inject tripled content for seamless loop — ensures cards fill any viewport width
+    row0El.innerHTML = row0Items.join('') + row0Items.join('') + row0Items.join('');
+    row1El.innerHTML = row1Items.join('') + row1Items.join('') + row1Items.join('');
+
+    // Measure first-set widths after layout
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const GAP = 14;
+
+        function measureHalfWidth(rowEl) {
+          const children = Array.from(rowEl.children);
+          // Content is tripled — measure one third for seamless reset point
+          const oneThird = Math.floor(children.length / 3);
+          let w = 0;
+          for (let i = 0; i < oneThird; i++) {
+            w += children[i].offsetWidth + GAP;
+          }
+          return w;
+        }
+
+        const w0 = measureHalfWidth(row0El);
+        const w1 = measureHalfWidth(row1El);
+
+        // Row 0: scrolls left (negative direction), Row 1: scrolls right (positive direction)
+        const speed0 = 0.42; // px per frame
+        const speed1 = 0.38;
+
+        let offset0 = 0;
+        // Row 1 starts pre-shifted left by its full set width so cards scroll rightward into view — no gap ever
+        let offset1 = -w1;
+
+        function tick() {
+          offset0 -= speed0;
+          if (Math.abs(offset0) >= w0) offset0 = 0;
+
+          offset1 += speed1;
+          // When row 1 has scrolled all the way back to 0, restart from -w1
+          if (offset1 >= 0) offset1 = -w1;
+
+          row0El.style.transform = `translateX(${offset0}px)`;
+          row1El.style.transform = `translateX(${offset1}px)`;
+
+          requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
