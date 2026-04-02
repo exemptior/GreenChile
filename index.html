@@ -24,6 +24,63 @@
   gtag('js', new Date());
   gtag('config', 'G-3N3N0RHGX7');
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     UTM PARAMETER CAPTURE
+     Reads UTM params from the URL on page load and sends
+     them to GA4 as a custom event. Also stores them in
+     sessionStorage so they persist across page navigation.
+
+     How it works (analogy): imagine every link to your site
+     is a package with a shipping label. This script reads
+     the label (utm_source, utm_medium, utm_campaign, etc.)
+     the moment someone arrives and logs it in Analytics —
+     so you know if they came from Instagram, your GBP
+     listing, a DoorDash promo, a flyer QR code, etc.
+
+     Example tracked URL:
+     greenchilerestaurant.com/?utm_source=google&utm_medium=gbp&utm_campaign=profile
+═══════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var utmKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+    var utmData = {};
+    var hasUTM = false;
+
+    utmKeys.forEach(function(key) {
+      var val = params.get(key);
+      if (val) {
+        utmData[key] = val;
+        hasUTM = true;
+        // Persist in sessionStorage so it survives anchor navigation
+        sessionStorage.setItem(key, val);
+      }
+    });
+
+    // If no UTM in URL, try to restore from session (user navigated internally)
+    if (!hasUTM) {
+      utmKeys.forEach(function(key) {
+        var stored = sessionStorage.getItem(key);
+        if (stored) { utmData[key] = stored; hasUTM = true; }
+      });
+    }
+
+    // Fire a GA4 custom event with all UTM data
+    if (hasUTM && typeof gtag === 'function') {
+      gtag('event', 'utm_capture', utmData);
+    }
+
+    // Also set as GA4 session-scoped custom dimensions if present
+    if (hasUTM && typeof gtag === 'function') {
+      gtag('set', utmData);
+    }
+  } catch(e) {
+    // Fail silently — never break the page over analytics
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Green Chile Restaurant | Authentic New Mexico Food in La Habra, CA</title>
