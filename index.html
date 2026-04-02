@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- ═══════════════════════════════════════════════════════
+     SECURITY: Content Security Policy
+     Restricts scripts/styles to trusted sources only.
+     Blocks XSS attacks from injected third-party scripts.
+═══════════════════════════════════════════════════════ -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src https://www.google-analytics.com https://analytics.google.com; frame-src https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self';">
+<!-- SECURITY: Prevent clickjacking / iframe embedding -->
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+<!-- SECURITY: Prevent MIME-type sniffing -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<!-- SECURITY: Control referrer info sent to third parties -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- SECURITY: Disable browser features not needed -->
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3N3N0RHGX7"></script>
 <script>
@@ -11,19 +26,20 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>The Green Chile Restaurant — Authentic New Mexico Cooking in La Habra</title>
+<title>The Green Chile Restaurant | Authentic New Mexico Food in La Habra, CA</title>
 
 <!-- SEO Meta -->
 <meta name="description" content="The Green Chile Restaurant in La Habra, CA — authentic New Mexico cooking since 2013. Stuffed sopapillas, Navajo tacos, green chile enchiladas, and fresh-made family recipes. Dine in, takeout & catering.">
 <meta name="keywords" content="Green Chile Restaurant La Habra, New Mexico food La Habra, sopapillas La Habra, Navajo tacos, Mexican restaurant La Habra CA, green chile enchiladas, catering La Habra, authentic New Mexico cooking Southern California">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://greenchilerestaurant.com">
+<meta name="author" content="The Green Chile Restaurant">
+<link rel="canonical" href="https://greenchilerestaurant.com/">
 
 <!-- Open Graph (Facebook, iMessage, WhatsApp, LLM crawlers) -->
 <meta property="og:type" content="restaurant">
 <meta property="og:title" content="The Green Chile Restaurant — Authentic New Mexico Cooking in La Habra">
 <meta property="og:description" content="Family recipes rooted in New Mexico tradition. Stuffed sopapillas, Navajo tacos & homemade green chile — made fresh to order in La Habra, CA since 2013.">
-<meta property="og:url" content="https://greenchilerestaurant.com">
+<meta property="og:url" content="https://greenchilerestaurant.com/">
 <meta property="og:image" content="https://raw.githubusercontent.com/exemptior/GreenChile/main/navajo_taco_studio.jpg">
 <meta property="og:image:alt" content="Navajo Taco at The Green Chile Restaurant in La Habra, CA">
 <meta property="og:image:width" content="1200">
@@ -37,19 +53,29 @@
 <meta name="twitter:description" content="Authentic New Mexico cooking since 2013. Sopapillas, Navajo tacos & green chile made fresh daily.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/exemptior/GreenChile/main/navajo_taco_studio.jpg">
 
-<!-- JSON-LD: Restaurant Structured Data (Google Knowledge Graph + AI Search) -->
+<!-- ═══════════════════════════════════════════════════════
+     SEO: LocalBusiness JSON-LD Schema Markup
+     Expanded to match Amigas parity — feeds Google Knowledge
+     Graph, AI Overviews, ChatGPT, Perplexity, and map results.
+═══════════════════════════════════════════════════════ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   "name": "The Green Chile Restaurant",
+  "alternateName": "Green Chile Restaurant La Habra",
   "url": "https://greenchilerestaurant.com",
   "logo": "https://raw.githubusercontent.com/exemptior/GreenChile/main/logo_combined.png",
-  "image": "https://raw.githubusercontent.com/exemptior/GreenChile/main/navajo_taco_studio.jpg",
+  "image": [
+    "https://raw.githubusercontent.com/exemptior/GreenChile/main/navajo_taco_studio.jpg",
+    "https://raw.githubusercontent.com/exemptior/GreenChile/main/logo_combined.png"
+  ],
   "description": "Authentic New Mexico cooking in La Habra, CA since 2013. Family recipes featuring stuffed sopapillas, Navajo tacos, green chile enchiladas, and homemade green chile made fresh daily.",
+  "slogan": "Authentic New Mexico cooking — family recipes made fresh to order since 2013.",
   "telephone": "+15624483674",
+  "email": "greenchilerestaurant@gmail.com",
   "priceRange": "$$",
-  "servesCuisine": ["New Mexican", "Mexican", "Southwestern"],
+  "servesCuisine": ["New Mexican", "Mexican", "Southwestern", "American"],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "2050 W Whittier Blvd",
@@ -90,12 +116,75 @@
     }
   ],
   "hasMenu": "https://greenchilerestaurant.com/#menu",
+  "menu": "https://greenchilerestaurant.com/#menu",
   "acceptsReservations": false,
   "currenciesAccepted": "USD",
   "paymentAccepted": "Cash, Credit Card",
   "foundingDate": "2013",
+  "areaServed": {
+    "@type": "City",
+    "name": "La Habra",
+    "addressRegion": "CA"
+  },
+  "knowsAbout": [
+    "Stuffed Sopapillas",
+    "Navajo Tacos",
+    "Green Chile Enchiladas",
+    "New Mexico Cuisine",
+    "Homemade Green Chile",
+    "Smothered Burritos",
+    "Catering",
+    "Family Recipes",
+    "Southwestern Cooking"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "The Green Chile Restaurant Menu",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "FoodEstablishmentReservation",
+          "name": "Catering Services",
+          "description": "Catering for corporate events, birthdays, family gatherings, and community events in La Habra and surrounding areas."
+        }
+      }
+    ]
+  },
+  "keywords": "New Mexico restaurant La Habra, sopapillas La Habra CA, Navajo tacos Southern California, green chile restaurant, authentic New Mexico food",
   "sameAs": [
     "https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard"
+  ]
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEO: BreadcrumbList Schema
+     Tells Google the site structure for rich result display.
+═══════════════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://greenchilerestaurant.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Menu",
+      "item": "https://greenchilerestaurant.com/#menu"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Catering",
+      "item": "https://greenchilerestaurant.com/#catering"
+    }
   ]
 }
 </script>
@@ -804,7 +893,7 @@
   </nav>
   <div class="gc-mob-divider"></div>
   <a href="tel:5624483674" class="gc-mob-phone" onclick="gcCloseMob()">(562) 448-3674</a>
-  <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="gc-mob-cta" onclick="gcCloseMob()">
+  <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer" class="gc-mob-cta" onclick="gcCloseMob()">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.2 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.28-.53a2 2 0 012.11.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     Order Online
   </a>
@@ -823,7 +912,7 @@
       <a href="#catering" class="gc-nav-a" data-s="catering">Catering</a>
     </div>
     <div class="gc-nav-right">
-      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="gc-nav-cta">Order Online</a>
+      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer" class="gc-nav-cta">Order Online</a>
       <button class="gc-ham" id="gcHamBtn" onclick="gcToggleMob()" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -832,7 +921,8 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero">
+<main id="main-content">
+<section id="hero" aria-label="The Green Chile Restaurant — New Mexico Food in La Habra, CA">
   <div class="hero-bg-gradient"></div>
   <div class="hero-bg-img" id="heroBg" style="background-image:url('https://raw.githubusercontent.com/exemptior/GreenChile/main/gc_burger_close.jpg');"></div>
   <div class="hero-overlay"></div>
@@ -841,7 +931,7 @@
     <h1 class="hero-title">Taste of<br><em>New Mexico.</em></h1>
     <!-- Address Pill -->
     <div style="margin-bottom:1.4rem;">
-      <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:rgba(212,168,67,0.18);border:1px solid rgba(212,168,67,0.55);color:#D4A843;font-size:0.72rem;font-weight:600;letter-spacing:0.8px;padding:6px 16px;border-radius:50px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(212,168,67,0.32)'" onmouseout="this.style.background='rgba(212,168,67,0.18)'">
+      <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;background:rgba(212,168,67,0.18);border:1px solid rgba(212,168,67,0.55);color:#D4A843;font-size:0.72rem;font-weight:600;letter-spacing:0.8px;padding:6px 16px;border-radius:50px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(212,168,67,0.32)'" onmouseout="this.style.background='rgba(212,168,67,0.18)'">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="#D4A843"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
         2050 W Whittier Blvd, La Habra, CA
       </a>
@@ -856,7 +946,7 @@
     </div>
     <p class="hero-sub">Family recipes rooted in New Mexico tradition. Stuffed sopapillas, Navajo tacos &amp; homemade green chile &mdash; made fresh to order in La Habra.</p>
     <div class="hero-btns">
-      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="btn-primary">Order Online</a>
+      <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer" class="btn-primary">Order Online</a>
       <a href="#menu" class="btn-secondary">View Menu</a>
     </div>
   </div>
@@ -1436,7 +1526,7 @@
   </div>
 
   <div class="menu-cta-wrap fade-in-up">
-    <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" class="btn-primary" style="display:inline-flex;">Order Online &rarr;</a>
+    <a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-flex;">Order Online &rarr;</a>
   </div>
 </section>
 
@@ -1508,7 +1598,7 @@
         </div>
         <div class="info-item">
           <div class="info-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
-          <div><div class="info-label">Location</div><div class="info-val"><a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="color:var(--chile);text-decoration:none;">2050 W Whittier Blvd, La Habra</a></div></div>
+          <div><div class="info-label">Location</div><div class="info-val"><a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" rel="noopener noreferrer" style="color:var(--chile);text-decoration:none;">2050 W Whittier Blvd, La Habra</a></div></div>
         </div>
         <div class="info-item">
           <div class="info-icon-wrap"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
@@ -1573,17 +1663,17 @@
       <div class="form-title">Get a Free Quote</div>
       <p class="form-sub">We'll get back to you within 24 hours to discuss your event details.</p>
       <div class="form-row">
-        <div class="form-group"><label>First Name</label><input type="text" placeholder="Maria"></div>
-        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Esqueda"></div>
+        <div class="form-group"><label for="f-first">First Name</label><input id="f-first" type="text" placeholder="Maria" maxlength="50" autocomplete="given-name"></div>
+        <div class="form-group"><label for="f-last">Last Name</label><input id="f-last" type="text" placeholder="Esqueda" maxlength="50" autocomplete="family-name"></div>
       </div>
-      <div class="form-group"><label>Email Address</label><input type="email" placeholder="maria@email.com"></div>
-      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="(562) 555-0000"></div>
+      <div class="form-group"><label for="f-email">Email Address</label><input id="f-email" type="email" placeholder="maria@email.com" maxlength="100" autocomplete="email"></div>
+      <div class="form-group"><label for="f-phone">Phone Number</label><input id="f-phone" type="tel" placeholder="(562) 555-0000" maxlength="20" pattern="[\d\s\(\)\-\+]+" autocomplete="tel"></div>
       <div class="form-row">
-        <div class="form-group"><label>Event Date</label><input type="date"></div>
-        <div class="form-group"><label>Guest Count</label><select><option>10&ndash;25 guests</option><option>25&ndash;50 guests</option><option>50&ndash;100 guests</option><option>100+ guests</option></select></div>
+        <div class="form-group"><label for="f-date">Event Date</label><input id="f-date" type="date"></div>
+        <div class="form-group"><label for="f-guests">Guest Count</label><select id="f-guests"><option>10&ndash;25 guests</option><option>25&ndash;50 guests</option><option>50&ndash;100 guests</option><option>100+ guests</option></select></div>
       </div>
-      <div class="form-group"><label>Event Type</label><select><option>Birthday Party</option><option>Corporate Lunch / Breakfast</option><option>Quincea&ntilde;era</option><option>Wedding / Anniversary</option><option>Family Gathering</option><option>School / Community Event</option><option>Other</option></select></div>
-      <div class="form-group"><label>Tell us about your event</label><textarea rows="3" placeholder="Any special requests, dietary needs, or details about your gathering..."></textarea></div>
+      <div class="form-group"><label for="f-type">Event Type</label><select id="f-type"><option>Birthday Party</option><option>Corporate Lunch / Breakfast</option><option>Quincea&ntilde;era</option><option>Wedding / Anniversary</option><option>Family Gathering</option><option>School / Community Event</option><option>Other</option></select></div>
+      <div class="form-group"><label for="f-notes">Tell us about your event</label><textarea id="f-notes" rows="3" placeholder="Any special requests, dietary needs, or details about your gathering..." maxlength="1000"></textarea></div>
       <button class="form-submit" onclick="handleFormSubmit(this)">Send Catering Request</button>
     </div>
   </div>
@@ -1592,15 +1682,20 @@
 <!-- DIVIDER -->
 <div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);margin:8px 0;"></div>
 
+</main><!-- /main -->
+
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo">
   <div class="footer-top">
     <div>
-      <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/logo_combined.png" alt="The Green Chile Restaurant" style="height:80px;width:auto;object-fit:contain;display:block;margin-bottom:1.2rem;">
+      <img src="https://raw.githubusercontent.com/exemptior/GreenChile/main/logo_combined.png" alt="The Green Chile Restaurant — New Mexico Food La Habra CA" style="height:80px;width:auto;object-fit:contain;display:block;margin-bottom:1.2rem;">
       <p class="footer-tagline">"Whatever you choose, you will want more."</p>
-      <div class="footer-contact-line">&#9679; <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" style="color:rgba(245,240,232,0.55);text-decoration:none;">2050 W Whittier Blvd, La Habra, CA 90631</a></div>
-      <div class="footer-contact-line">&#9679; <a href="tel:5624483674" style="color:rgba(245,240,232,0.55);text-decoration:none;">(562) 448-3674</a></div>
-      <div class="footer-contact-line" style="margin-top:10px;"><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" style="color:var(--sage);font-weight:500;">Order Online via Toast &rarr;</a></div>
+      <!-- NAP Block: must match Google Business Profile exactly -->
+      <address style="font-style:normal;">
+        <div class="footer-contact-line">&#9679; <a href="https://maps.google.com/?q=2050+W+Whittier+Blvd,+La+Habra,+CA+90631" target="_blank" rel="noopener noreferrer" style="color:rgba(245,240,232,0.55);text-decoration:none;">2050 W Whittier Blvd, La Habra, CA 90631</a></div>
+        <div class="footer-contact-line">&#9679; <a href="tel:5624483674" style="color:rgba(245,240,232,0.55);text-decoration:none;">(562) 448-3674</a></div>
+      </address>
+      <div class="footer-contact-line" style="margin-top:10px;"><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer" style="color:var(--sage);font-weight:500;">Order Online via Toast &rarr;</a></div>
     </div>
     <div>
       <div class="footer-col-title">Explore</div>
@@ -1614,7 +1709,7 @@
     <div>
       <div class="footer-col-title">Order</div>
       <ul class="footer-links">
-        <li><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank">Order Online</a></li>
+        <li><a href="https://www.toasttab.com/the-green-chile-2050-west-whittier-boulevard" target="_blank" rel="noopener noreferrer">Order Online</a></li>
         <li><a href="tel:5624483674">Call to Order</a></li>
         <li><a href="#catering">Catering Request</a></li>
       </ul>
@@ -1741,26 +1836,66 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
+  // ── SECURITY: Input sanitization helper ──
+  // Strips HTML tags and trims whitespace before any data
+  // leaves the page. Like a bouncer checking IDs at the door.
+  function sanitizeInput(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .trim()
+      .slice(0, 1000); // hard cap — nothing over 1000 chars passes
+  }
+
   async function handleFormSubmit(btn) {
     const form = btn.closest('.catering-form-wrap');
-    const inputs  = form.querySelectorAll('input[type="text"]');
-    const firstName = inputs[0] ? inputs[0].value.trim() : '';
-    const lastName  = inputs[1] ? inputs[1].value.trim() : '';
-    const email     = form.querySelector('input[type="email"]')?.value.trim() || '';
-    const phone     = form.querySelector('input[type="tel"]')?.value.trim()   || '';
-    const date      = form.querySelector('input[type="date"]')?.value         || '';
-    const selects   = form.querySelectorAll('select');
-    const guests    = selects[0]?.value || '';
-    const eventType = selects[1]?.value || '';
-    const notes     = form.querySelector('textarea')?.value.trim()            || '';
-    if (!firstName || !email) { alert('Please fill in your first name and email address.'); return; }
+
+    // ── SECURITY: Collect via IDs (not positional index) ──
+    const firstName = sanitizeInput(form.querySelector('#f-first')?.value || '');
+    const lastName  = sanitizeInput(form.querySelector('#f-last')?.value  || '');
+    const email     = sanitizeInput(form.querySelector('#f-email')?.value || '');
+    const phone     = sanitizeInput(form.querySelector('#f-phone')?.value || '');
+    const date      = sanitizeInput(form.querySelector('#f-date')?.value  || '');
+    const guests    = sanitizeInput(form.querySelector('#f-guests')?.value|| '');
+    const eventType = sanitizeInput(form.querySelector('#f-type')?.value  || '');
+    const notes     = sanitizeInput(form.querySelector('#f-notes')?.value || '');
+
+    // ── SECURITY: Client-side validation ──
+    const emailPattern = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
+    if (email && !emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    const phonePattern = /^[\d\s\(\)\-\+]{7,20}$/;
+    if (phone && !phonePattern.test(phone)) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+    if (!firstName || !email) {
+      alert('Please fill in your first name and email address.');
+      return;
+    }
+
     btn.textContent = 'Sending...';
     btn.disabled = true;
+
     try {
       const res = await fetch('https://formspree.io/f/xlgpqpqd', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: firstName + ' ' + lastName, email, phone, event_date: date, guests, event_type: eventType, message: notes })
+        body: JSON.stringify({
+          name: (firstName + ' ' + lastName).trim(),
+          email,
+          phone,
+          event_date: date,
+          guests,
+          event_type: eventType,
+          message: notes
+        })
       });
       if (res.ok) {
         btn.textContent = "Request Sent — We'll be in touch within 24 hours!";
